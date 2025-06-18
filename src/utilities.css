@@ -1,0 +1,7 @@
+@layer utilities {
+  .debug        { @apply border-2 border-danger; }
+  .debug-red    { @apply border-2 border-danger; }
+  .debug-blue   { @apply border-2 border-primary; }
+  .debug-green  { @apply border-2 border-success; }
+  .debug-yellow { @apply border-2 border-warn; }
+}

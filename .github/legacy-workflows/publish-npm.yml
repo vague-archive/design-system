@@ -1,0 +1,79 @@
+name: Publish NPM Package
+
+on:
+  workflow_call:
+    secrets:
+      NPM_TOKEN:
+        required: true
+    outputs:
+      version:
+        value: ${{ jobs.publish.outputs.version }}
+
+env:
+  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+jobs:
+  publish:
+    name: Publish NPM Package
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup node     # required for npm publish
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Setup bun
+        uses: oven-sh/setup-bun@v1
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Create bundles for NPM package
+        run: bun run bundle
+
+      - name: Setup git
+        run: |
+          git config --global user.name 'Void CI'
+          git config --global user.email 'ci@void.dev'
+
+      - name: Bump Version
+        id: version
+        run: |
+          latest_version=$(npm view @${{ github.repository }} versions --json | jq -r '.[-1]')
+          tmp=$(mktemp)
+          jq ".version = \"$latest_version\"" package.json > "$tmp" && mv "$tmp" package.json
+          VERSION=$(npm version patch --git-tag-version false)
+          echo "version=${VERSION#v}" >> "$GITHUB_OUTPUT"
+
+      - name: Version and Publish npm package
+        run: |
+          VERSION=v${{ steps.version.outputs.version }}
+          echo "Publishing version $VERSION..."
+          npm version $VERSION --allow-same-version --git-tag-version false
+          npm publish --no-git-checks
+          git add .
+          git commit -m "$VERSION"
+          git tag "$VERSION"
+          git push --tags
+      
+      - name: Publish all integrations
+        strategy:
+          matrix:
+            integration: [react]
+        env:
+          working-directory: src/component/integration/$integration
+        run: |
+          VERSION=v${{ steps.version.outputs.version }}
+          jq ".version = \"$VERSION\"" package.json > "$tmp" && mv "$tmp" package.json
+          echo "Publishing integration ${{ matrix.integration }}..."
+          echo "Installing dependencies..."
+          bun install
+          echo "Publishing version $VERSION @vaguevoid/design-system/$integration..."
+          npm version $VERSION --allow-same-version --git-tag-version false
+          npm publish --no-git-checks

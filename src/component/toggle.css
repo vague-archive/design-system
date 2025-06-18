@@ -1,0 +1,27 @@
+@layer components {
+  fx-toggle {
+    @apply inline-flex;
+    width: 1.8em;
+    height: 1em;
+  }
+
+  toggle-track {
+    @apply bg-gray-300 w-full h-full relative inline-flex items-center flex-shrink-0 cursor-pointer rounded-full transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-600 focus:ring-offset-2;
+  }
+
+  toggle-thumb {
+    @apply translate-x-0 w-1/2 h-full pointer-events-none inline-block transform rounded-full bg-gray-50 shadow ring-0 transition duration-200 ease-in-out
+  }
+
+  fx-toggle[on] toggle-track {
+    @apply bg-primary-600;
+  }
+  fx-toggle[on] toggle-thumb {
+    @apply translate-x-full;
+  }
+
+  fx-toggle[ice][on]    toggle-track { @apply bg-ice-600; }
+  fx-toggle[kiwi][on]   toggle-track { @apply bg-kiwi-600; }
+  fx-toggle[pkfire][on] toggle-track { @apply bg-pkfire-600; }
+  fx-toggle[jiggly][on] toggle-track { @apply bg-jiggly-600; }
+}

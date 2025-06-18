@@ -1,0 +1,42 @@
+@layer components {
+  .link {
+    @apply cursor-pointer hover:underline;
+    @apply focus:outline-none focus:ring-2 focus:ring-offset-2;
+    @apply px-1 rounded;
+    @apply link-primary;
+  }
+
+  .link-primary {
+    @apply text-primary;
+    @apply focus:ring-primary;
+  }
+
+  .link-secondary {
+    @apply text-gray-500;
+    @apply focus:ring-primary;
+  }
+
+  .link-success {
+    @apply text-success;
+    @apply focus:ring-success;
+  }
+
+  .link-danger {
+    @apply text-danger;
+    @apply focus:ring-danger;
+  }
+
+  .link-warn {
+    @apply text-warn-500;
+    @apply focus:ring-warn;
+  }
+
+  .link-without-padding {
+    @apply p-0;
+  }
+
+  .link-separator::before {
+    content: "|";
+    @apply text-gray-300 mx-1;
+  }
+}

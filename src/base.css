@@ -1,0 +1,17 @@
+@layer base {
+  :root {
+    font-size: 62.5%; /* ensure 1rem = 10px so easy to convert rem to px */
+  }
+
+  body {
+    @apply bg-light text-dark text-base font-medium;
+  }
+
+  body.modal {
+    overflow: hidden;
+  }
+
+  code {
+    @apply p-1 border border-gray-100 bg-gray-50;
+  }
+}

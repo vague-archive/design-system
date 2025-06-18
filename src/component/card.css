@@ -1,0 +1,39 @@
+@layer components {
+
+  card {
+    @apply block relative border border-dark;
+    @apply bg-white;
+    @apply overflow-hidden;
+  }
+
+  card-header {
+    @apply px-4 py-2 border-b border-dark;
+    @apply flex items-center gap-4;
+  }
+
+  card-header-rhs {
+    @apply flex-1 flex justify-end;
+  }
+
+  card-icon {
+    @apply text-32;
+  }
+
+  card-title {
+    @apply h3 flex items-center gap-1;
+  }
+
+  card-body {
+    @apply block px-4 py-4;
+  }
+
+  card-buttons {
+    @apply px-4 py-2 mt-4;
+    @apply flex flex-row-reverse items-center gap-4;
+  }
+
+  card-ribbon {
+    @apply absolute right-0 font-normal w-40 text-center rotate-45 translate-y-5 translate-x-12 text-small border border-gray-300 border-dashed;
+    @apply bg-primary text-light;
+  }
+}

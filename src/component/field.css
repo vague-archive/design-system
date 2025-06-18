@@ -1,0 +1,164 @@
+@layer components {
+
+  field {
+    @apply flex flex-col;
+  }
+
+  field label {
+    @apply text-small;
+  }
+
+  field:has(field-error) label {
+    @apply text-danger-500;
+  }
+
+  field-help {
+    @apply text-small text-gray-500;
+  }
+
+  field-error {
+    @apply text-small text-danger-500 flex items-center;
+  }
+
+  field-error icon {
+    @apply text-large mr-1.5;
+  }
+
+  field-input {
+    @apply flex items-center relative;
+  }
+
+  field-input input,
+  field-input select,
+  field-input textarea {
+    @apply w-full;
+    @apply bg-gray-100 placeholder:text-gray-400 text-gray-900;
+    @apply px-2 py-1.5;
+    @apply rounded-sm;
+    @apply border border-transparent;
+    @apply outline-none;
+  }
+
+  /* Custom checkmark appearance so we can use out own text colors for it */
+  input[type=checkbox]:checked::after {
+      content: "✓";
+      position: relative;
+      bottom: 3px;
+      left: 1px;
+  }
+
+  input[type=checkbox] {
+    /* Delete default appearance so that we can customize more aspects of the checkbox */
+    -moz-appearance:none;
+    -webkit-appearance:none;
+    -o-appearance:none;
+    outline: none;
+    content: none;	
+    margin-right: 4px;
+    @apply h-4 w-4 text-base p-0; /* fixed height for now until we have design for different sizes */
+    /* Basic coloration for all textboxes */
+    @apply border border-gray-100;
+    @apply focus:outline focus:outline-2 focus:outline-offset-1;
+    @apply checked:bg-white checked:hover:bg-gray-100 checked:shadow-input checked:border-primary;
+    @apply focus:checked:bg-white;
+    @apply hover:checked:border-primary;
+  }
+  
+  /* Overwrite primary colors for error checkboxes */
+  field:has(field-error) field-input input[type=checkbox] {
+    @apply bg-gray-100;
+    @apply checked:border-danger;
+    @apply hover:border-gray-400;
+    @apply checked:hover:border-danger;
+    @apply focus:outline-danger focus:bg-gray-100;
+    @apply checked:focus:border-danger;
+    @apply checked:focus:hover:border-danger;
+  }
+  
+  field-input input[type=checkbox]:disabled {
+    @apply text-gray-400 bg-gray-300 border-gray-300;
+    @apply checked:border-gray-400 checked:shadow-gray-400;
+    @apply checked:hover:bg-gray-300;
+  }
+
+
+  field-input input[disabled],
+  field-input select[disabled],
+  field-input textarea[disabled] {
+    @apply bg-gray-300 text-gray-400;
+  }
+
+  field:not(:has(field-error)) field-input input:not([disabled]),
+  field:not(:has(field-error)) field-input select:not([disabled]),
+  field:not(:has(field-error)) field-input textarea:not([disabled]) {
+    @apply hover:border-gray-400;
+    @apply focus:bg-white focus:border-primary focus:shadow-input;
+    @apply focus:hover:border-primary;
+  }
+
+  /* Overwrite some of the focus rules applied to all inputs above for checkboxes specifically */
+  field:not(:has(field-error)) field-input input[type=checkbox]:focus {
+    @apply bg-gray-100 border-gray-100 outline-primary shadow-none;
+    @apply hover:border-gray-400;
+    @apply checked:border-primary;
+    @apply checked:hover:bg-gray-100;
+  }
+
+  field:has(field-error) field-input input[type=checkbox]:focus {
+    @apply bg-gray-100 border-gray-100 outline-danger shadow-none;
+    @apply hover:border-gray-400;
+    @apply checked:border-danger;
+    @apply checked:hover:bg-gray-100;
+  }
+
+  field:has(field-error) field-input input,
+  field:has(field-error) field-input select,
+  field:has(field-error) field-input textarea {
+    @apply bg-danger-50;
+    @apply hover:border-danger-400;
+    @apply focus:border-danger-400 focus:shadow-none;
+  }
+
+  field-input:has(field-icon-left)  input { @apply pl-8; }
+  field-input:has(field-icon-right) input { @apply pr-8; }
+
+  field-icon-left  { @apply absolute left-2  text-large text-gray-500; }
+  field-icon-right { @apply absolute right-2 text-large text-gray-500; }
+
+  field:has(input[disabled]) label      { @apply text-gray-400; }
+  field:has(input[disabled]) field-help { @apply text-gray-400; }
+
+  /*
+    VERTICAL SEPARATION
+  */
+
+  field + field {
+    @apply mt-4;
+  }
+
+  label + field-input {
+    @apply mt-2;
+  }
+
+  field-input + field-error,
+  field-input + field-help {
+    @apply mt-2 ;
+  }
+
+  /*
+    SUBMIT/CANCEL BUTTONS AT BOTTOM OF FORM
+  */
+
+  form-buttons {
+    @apply block w-full flex items-center justify-end gap-2;
+  }
+
+  form-buttons.left   { @apply justify-start;  }
+  form-buttons.center { @apply justify-center; }
+  form-buttons.right  { @apply justify-end;    }
+
+  field + form-buttons {
+    @apply mt-8;
+  }
+
+}

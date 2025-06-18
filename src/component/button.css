@@ -1,0 +1,87 @@
+@layer components {
+
+  .btn-base {
+    @apply h-8 text-base; /* fixed height (32px) for now until we have design for different sizes */
+    @apply px-3 py-1.5;
+    @apply min-w-32;
+    @apply inline-flex items-center justify-center gap-3;
+    @apply border rounded-full;
+    @apply font-semibold;
+    @apply outline-none focus:ring-2 focus:ring-offset-2;
+    @apply truncate;
+   }
+
+  .btn-base[disabled] {
+    @apply bg-gray-300 text-gray-400 border-gray-400;
+  }
+
+  /* ------------------------------------------------------------------------------------------- */
+
+  .btn-primary   { @apply btn-base; }
+  .btn-secondary { @apply btn-base; }
+  .btn-tertiary  { @apply btn-base; }
+  .btn-success   { @apply btn-base; }
+  .btn-danger    { @apply btn-base; }
+
+  .btn-primary:not([disabled]) {
+    @apply bg-primary-500 text-gray-50 border-gray-900;
+    @apply hover:shadow-button;
+    @apply active:bg-primary-400 active:shadow-none;
+    @apply active:focus:border-gray-900;
+    @apply focus:ring-primary-500 focus:shadow-none active:ring-transparent focus:border-white;
+    @apply focus:hover:bg-primary-400;
+  }
+
+  .btn-secondary:not([disabled]) {
+    @apply bg-white text-gray-900 border-gray-900;
+    @apply hover:shadow-button;
+    @apply active:bg-gray-100 active:shadow-none;
+    @apply focus:bg-white focus:shadow-none focus:ring-primary-500 focus:ring-offset-0;
+    @apply focus:hover:bg-gray-100 focus:active:ring-transparent;
+  }
+
+  .btn-tertiary:not([disabled]) {
+    @apply bg-gray-100 text-gray-900 border-transparent;
+    @apply hover:bg-gray-200;
+    @apply active:bg-gray-300;
+    @apply focus:bg-gray-100 focus:ring-primary-500 focus:ring-offset-0;
+    @apply focus:hover:bg-gray-200 focus:active:bg-gray-300 focus:active:ring-transparent;
+  }
+
+  .btn-tertiary[disabled] {
+    @apply border-none;
+  }
+
+  .btn-success:not([disabled]) {
+    @apply bg-success-500 text-success-50 border-gray-900;
+    @apply hover:shadow-button;
+    @apply active:bg-success-400 active:shadow-none;
+    @apply active:focus:border-gray-900;
+    @apply focus:ring-success-500 focus:shadow-none active:ring-transparent focus:border-white;
+    @apply focus:hover:bg-success-400;
+  }
+
+  .btn-danger:not([disabled]) {
+    @apply bg-danger-500 text-danger-50 border-gray-900;
+    @apply hover:shadow-button;
+    @apply active:bg-danger-400 active:shadow-none;
+    @apply active:focus:border-gray-900;
+    @apply focus:ring-danger-500 focus:shadow-none active:ring-transparent focus:border-white;
+    @apply focus:hover:bg-danger-400;
+  }
+
+  /* ------------------------------------------------------------------------------------------- */
+
+  .btn-wide {
+    @apply block w-80;
+  }
+
+  .btn-block {
+    @apply block w-full;
+  }
+
+  .btn-round {
+    @apply min-w-0 aspect-square;
+  }
+
+}

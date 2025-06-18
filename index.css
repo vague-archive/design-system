@@ -1,0 +1,28 @@
+@import "./src/base.css";
+@import "./src/components.css";
+@import "./src/utilities.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .code-sample {
+    min-height: 2em;
+    overflow: auto;
+    @apply block p-2;
+    @apply bg-jiggly-50 border border-jiggly-800;
+  }
+
+  .code-sample summary {
+    @apply text-jiggly-800 cursor-pointer;
+  }
+
+  .code-sample pre {
+    @apply p-2;
+  }
+
+  .code-sample code {
+    @apply block bg-inherit border-none p-0;
+  }
+}

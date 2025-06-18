@@ -1,0 +1,28 @@
+{
+  "name": "@vaguevoid/design-system",
+  "version": "0.1.0",
+  "description": "Utilities for using the Fiasco Design System in React",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/vaguevoid/design-system.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "author": "Void Team <code@void.dev>",
+  "type": "module",
+  "scripts": {
+  },
+  "exports": {
+    "./react": "./lib.ts"
+  },
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4"
+  }
+}

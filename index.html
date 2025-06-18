@@ -1,0 +1,1316 @@
+<html lang="en" class="h-full">
+  <head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fiasco Design System</title>
+  <link rel="stylesheet" href="/index.css" />
+  <script type="module" src="/index.ts"></script>
+</head>
+<body class="h-full flex flex-col overflow-hidden">
+
+  <div class="p-4 border-b border-dark">
+
+    <div class="flex flex-wrap items-center justify-between">
+      <fiasco-logo class="text-36"></fiasco-logo>
+      <div class="text-right">
+        <p>
+          Implementing the
+          <a class="link" target="_hyrule" href="https://www.figma.com/design/LOvFXrwBY9SK2jnEFV4RO9/%F0%9F%8F%B0-Hyrule-Design-System?node-id=343-2357&t=CaLD4coTez70d8iE-0">
+            Fiasco Design System
+          </a>
+        </p>
+        <p>
+          See GitHub
+          <a class="link" target="_readme" href="https://github.com/vaguevoid/design-system">
+            README
+          </a> or
+          <a class="link" target="_readme" href="https://github.com/vaguevoid/design-system/blob/main/CHANGELOG.md">
+            CHANGELOG
+          </a>
+          <span id="version"></span>
+        </p>
+        <script type="module">
+          let data = await (await fetch("/version")).json();
+          if (data.version)
+            document.getElementById("version").textContent = "v" + data.version;
+        </script>
+      </div>
+    </div>
+
+    <nav class="max-w-4xl mx-auto flex flex-wrap justify-center mt-4">
+      <a href="#reset-card" class="link">reset</a>
+      <span class="link-separator"></span>
+      <a href="#colors-card" class="link">colors</a>
+      <span class="link-separator"></span>
+      <a href="#typography-card" class="link">typography</a>
+      <span class="link-separator"></span>
+      <a href="#spacing-card" class="link">spacing</a>
+      <span class="link-separator"></span>
+      <a href="#logos-card" class="link">logos</a>
+      <span class="link-separator"></span>
+      <a href="#icons-card" class="link">icons</a>
+      <span class="link-separator"></span>
+      <a href="#links-card" class="link">links</a>
+      <span class="link-separator"></span>
+      <a href="#cards-card" class="link">cards</a>
+      <span class="link-separator"></span>
+      <a href="#tabs-card" class="link">tabs</a>
+      <span class="link-separator"></span>
+      <a href="#buttons-card" class="link">buttons</a>
+      <span class="link-separator"></span>
+      <a href="#inputs-card" class="link">inputs</a>
+      <span class="link-separator"></span>
+      <a href="#modals-card" class="link">modals</a>
+      <span class="link-separator"></span>
+      <a href="#misc-card" class="link">misc</a>
+    </nav>
+  </div>
+
+  <div class="flex-1 overflow-auto">
+    <div class="bg-graphpaper pb-128">
+      <div class="max-w-4xl mx-auto px-6 py-12 space-y-12">
+
+        <div class="border-l-8 border-t border-b border-r border-warn-700 bg-warn-100 p-4 text-large text-warn-700 overflow-hidden">
+          <div class="flex items-center">
+            <i class="iconoir-warning-triangle text-32"></i>
+            <p class="ml-3">
+              <b>WARNING:</b> This is a rough 1st draft of a WIP Figma design system... <b>YMMV</b>
+            </p>
+          </div>
+        </div>
+
+        <card>
+          <card-header>
+            <card-title><a name="reset-card">Reset</a></card-title>
+          </card-header>
+          <card-body class="space-y-4">
+            <p>
+              Our reset comes from the <a class="link" href="https://tailwindcss.com/docs/preflight">Tailwind Preflight</a>
+              and we specify a base text size, weight, and color:
+            </p>
+            <details class="code-sample" data-sample="reset">
+              <summary>show base styles</summary>
+            </details>
+            <p>
+              A background graphpaper grid image is available
+            </p>
+            <details class="code-sample" data-sample="bg-graphpaper">
+              <summary>show example</summary>
+            </details>
+          </card-body>
+        </card>
+
+        <!--
+        COLORS
+        -->
+
+        <card>
+          <card-header>
+            <card-title><a name="colors-card">Colors</a></card-title>
+          </card-header>
+          <card-body class="space-y-4">
+            <div class="flex flex-col sm:flex-row">
+              <div class="flex-1 p-8 space-y-2">
+                <p>
+                  We define both generic and specific names for each color (e.g. <b>primary</b> vs <b>plue</b>).
+                </p>
+                <p>
+                  We recommend using the generic names where possible. This allows us to
+                  change the underlying colors without having to search and replace
+                  across the entire code base.
+                </p>
+              </div>
+              <div class="flex-1 border overflow-hidden">
+                <div class="p-2 bg-light   text-dark  flex justify-between">light <span>white</span></div>
+                <div class="p-2 bg-dark    text-light flex justify-between">dark <span>black</span></div>
+                <div class="p-2 bg-gray    text-light flex justify-between">gray <span>pluetral</span></div>
+                <div class="p-2 bg-primary text-light flex justify-between">primary <span>plue</span></div>
+                <div class="p-2 bg-success text-light flex justify-between">success <span>fel</span></div>
+                <div class="p-2 bg-warn    text-dark  flex justify-between">warn <span>pika</span></div>
+                <div class="p-2 bg-danger  text-light flex justify-between">danger <span>pkfire</span></div>
+              </div>
+            </div>
+            <details class="code-sample" data-sample="colors">
+              <summary>show example</summary>
+            </details>
+            <div class="flex flex-col sm:flex-row">
+              <div class="flex-1 p-8">
+                <p>
+                  We also have 3 colors with specific names that do not have a generic meaning (yet).
+                </p>
+              </div>
+              <div class="flex-1 border overflow-hidden">
+                <div class="p-2 bg-ice    text-light flex justify-between">&nbsp;<span>ice</span></div>
+                <div class="p-2 bg-kiwi   text-dark  flex justify-between">&nbsp;<span>kiwi</span></div>
+                <div class="p-2 bg-jiggly text-dark  flex justify-between">&nbsp;<span>jiggly</span></div>
+              </div>
+            </div>
+            <details class="code-sample" data-sample="colors2">
+              <summary>show example</summary>
+            </details>
+          </card-body>
+        </card>
+
+        <card>
+          <card-header>
+            <card-title>Color Shades</card-title>
+          </card-header>
+          <card-body class="space-y-8">
+
+            <details class="code-sample" data-sample="color-shades">
+              <summary>show example</summary>
+            </details>
+
+            <div class="flex flex-col gap-4 sm:flex-row flex-wrap justify-between">
+              <div class="flex-1">
+                <div class="p-2 whitespace-nowrap bg-gray-50  text-dark">gray-50</div>
+                <div class="p-2 whitespace-nowrap bg-gray-100 text-dark">gray-100</div>
+                <div class="p-2 whitespace-nowrap bg-gray-200 text-dark">gray-200</div>
+                <div class="p-2 whitespace-nowrap bg-gray-300 text-dark">gray-300</div>
+                <div class="p-2 whitespace-nowrap bg-gray-400 text-light">gray-400</div>
+                <div class="p-2 whitespace-nowrap bg-gray-500 text-light">gray-500</div>
+                <div class="p-2 whitespace-nowrap bg-gray-600 text-light">gray-600</div>
+                <div class="p-2 whitespace-nowrap bg-gray-700 text-light">gray-700</div>
+                <div class="p-2 whitespace-nowrap bg-gray-800 text-light">gray-800</div>
+                <div class="p-2 whitespace-nowrap bg-gray-900 text-light">gray-900</div>
+              </div>
+              <div class="flex-1">
+                <div class="p-2 whitespace-nowrap bg-primary-50  text-dark">primary-50</div>
+                <div class="p-2 whitespace-nowrap bg-primary-100 text-dark">primary-100</div>
+                <div class="p-2 whitespace-nowrap bg-primary-200 text-dark">primary-200</div>
+                <div class="p-2 whitespace-nowrap bg-primary-300 text-dark">primary-300</div>
+                <div class="p-2 whitespace-nowrap bg-primary-400 text-light">primary-400</div>
+                <div class="p-2 whitespace-nowrap bg-primary-500 text-light">primary-500</div>
+                <div class="p-2 whitespace-nowrap bg-primary-600 text-light">primary-600</div>
+                <div class="p-2 whitespace-nowrap bg-primary-700 text-light">primary-700</div>
+                <div class="p-2 whitespace-nowrap bg-primary-800 text-light">primary-800</div>
+                <div class="p-2 whitespace-nowrap bg-primary-900 text-light">primary-900</div>
+              </div>
+              <div class="flex-1">
+                <div class="p-2 whitespace-nowrap bg-success-50  text-dark">success-50</div>
+                <div class="p-2 whitespace-nowrap bg-success-100 text-dark">success-100</div>
+                <div class="p-2 whitespace-nowrap bg-success-200 text-dark">success-200</div>
+                <div class="p-2 whitespace-nowrap bg-success-300 text-dark">success-300</div>
+                <div class="p-2 whitespace-nowrap bg-success-400 text-dark">success-400</div>
+                <div class="p-2 whitespace-nowrap bg-success-500 text-light">success-500</div>
+                <div class="p-2 whitespace-nowrap bg-success-600 text-light">success-600</div>
+                <div class="p-2 whitespace-nowrap bg-success-700 text-light">success-700</div>
+                <div class="p-2 whitespace-nowrap bg-success-800 text-light">success-800</div>
+                <div class="p-2 whitespace-nowrap bg-success-900 text-light">success-900</div>
+              </div>
+              <div class="flex-1">
+                <div class="p-2 whitespace-nowrap bg-warn-50  text-dark">warn-50</div>
+                <div class="p-2 whitespace-nowrap bg-warn-100 text-dark">warn-100</div>
+                <div class="p-2 whitespace-nowrap bg-warn-200 text-dark">warn-200</div>
+                <div class="p-2 whitespace-nowrap bg-warn-300 text-dark">warn-300</div>
+                <div class="p-2 whitespace-nowrap bg-warn-400 text-dark">warn-400</div>
+                <div class="p-2 whitespace-nowrap bg-warn-500 text-dark">warn-500</div>
+                <div class="p-2 whitespace-nowrap bg-warn-600 text-light">warn-600</div>
+                <div class="p-2 whitespace-nowrap bg-warn-700 text-light">warn-700</div>
+                <div class="p-2 whitespace-nowrap bg-warn-800 text-light">warn-800</div>
+                <div class="p-2 whitespace-nowrap bg-warn-900 text-light">warn-900</div>
+              </div>
+              <div class="flex-1">
+                <div class="p-2 whitespace-nowrap bg-danger-50  text-dark">danger-50</div>
+                <div class="p-2 whitespace-nowrap bg-danger-100 text-dark">danger-100</div>
+                <div class="p-2 whitespace-nowrap bg-danger-200 text-dark">danger-200</div>
+                <div class="p-2 whitespace-nowrap bg-danger-300 text-dark">danger-300</div>
+                <div class="p-2 whitespace-nowrap bg-danger-400 text-light">danger-400</div>
+                <div class="p-2 whitespace-nowrap bg-danger-500 text-light">danger-500</div>
+                <div class="p-2 whitespace-nowrap bg-danger-600 text-light">danger-600</div>
+                <div class="p-2 whitespace-nowrap bg-danger-700 text-light">danger-700</div>
+                <div class="p-2 whitespace-nowrap bg-danger-800 text-light">danger-800</div>
+                <div class="p-2 whitespace-nowrap bg-danger-900 text-light">danger-900</div>
+              </div>
+            </div>
+
+            <div class="flex-1">
+              Including our 3 additional colors that do not (yet) have generic names:
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-4 flex-wrap justify-between">
+              <div class="flex-1">
+                <div class="p-2 bg-ice-50  text-dark">ice-50</div>
+                <div class="p-2 bg-ice-100 text-dark">ice-100</div>
+                <div class="p-2 bg-ice-200 text-dark">ice-200</div>
+                <div class="p-2 bg-ice-300 text-dark">ice-300</div>
+                <div class="p-2 bg-ice-400 text-dark">ice-400</div>
+                <div class="p-2 bg-ice-500 text-light">ice-500</div>
+                <div class="p-2 bg-ice-600 text-light">ice-600</div>
+                <div class="p-2 bg-ice-700 text-light">ice-700</div>
+                <div class="p-2 bg-ice-800 text-light">ice-800</div>
+                <div class="p-2 bg-ice-900 text-light">ice-900</div>
+              </div>
+              <div class="flex-1">
+                <div class="p-2 bg-kiwi-50  text-dark">kiwi-50</div>
+                <div class="p-2 bg-kiwi-100 text-dark">kiwi-100</div>
+                <div class="p-2 bg-kiwi-200 text-dark">kiwi-200</div>
+                <div class="p-2 bg-kiwi-300 text-dark">kiwi-300</div>
+                <div class="p-2 bg-kiwi-400 text-dark">kiwi-400</div>
+                <div class="p-2 bg-kiwi-500 text-dark">kiwi-500</div>
+                <div class="p-2 bg-kiwi-600 text-dark">kiwi-600</div>
+                <div class="p-2 bg-kiwi-700 text-light">kiwi-700</div>
+                <div class="p-2 bg-kiwi-800 text-light">kiwi-800</div>
+                <div class="p-2 bg-kiwi-900 text-light">kiwi-900</div>
+              </div>
+              <div class="flex-1">
+                <div class="p-2 bg-jiggly-50  text-dark">jiggly-50</div>
+                <div class="p-2 bg-jiggly-100 text-dark">jiggly-100</div>
+                <div class="p-2 bg-jiggly-200 text-dark">jiggly-200</div>
+                <div class="p-2 bg-jiggly-300 text-dark">jiggly-300</div>
+                <div class="p-2 bg-jiggly-400 text-dark">jiggly-400</div>
+                <div class="p-2 bg-jiggly-500 text-dark">jiggly-500</div>
+                <div class="p-2 bg-jiggly-600 text-dark">jiggly-600</div>
+                <div class="p-2 bg-jiggly-700 text-light">jiggly-700</div>
+                <div class="p-2 bg-jiggly-800 text-light">jiggly-800</div>
+                <div class="p-2 bg-jiggly-900 text-light">jiggly-900</div>
+              </div>
+            </div>
+          </card-body>
+        </card>
+
+        <!--
+        TYPOGRAPHY
+        -->
+
+        <card>
+          <card-header>
+            <card-title><a name="typography-card">Typography</a></card-title>
+          </card-header>
+          <card-body class="space-y-4">
+            <p>
+              We are using <a class="link" href="https://fonts.google.com/specimen/Instrument+Sans" target="_font">Instrument Sans</a>.
+            </p>
+            <details class="code-sample" data-sample="text-size">
+              <summary>show example</summary>
+            </details>
+            <div>
+              <p class="text-large">This is Large Text</p>
+              <p class="text-base">This is Normal Text</p>
+              <p class="text-small">This is Small Text</p>
+              <p class="text-tiny">This is Tiny Text</p>
+            </div>
+            <details class="code-sample" data-sample="text-weight">
+              <summary>show example</summary>
+            </details>
+            <div>
+              <p class="font-bold">This is Bold (700)</p>
+              <p class="font-semibold">This is Semi-Bold (600)</p>
+              <p class="font-medium">This is Medium (500) - (our default)</p>
+              <p class="font-normal">This is Normal (400)</p>
+            </div>
+          </card-body>
+        </card>
+
+        <card>
+          <card-header>
+            <card-title>Typography - Headings</card-title>
+          </card-header>
+          <card-body class="space-y-4 overflow-auto">
+            <details class="code-sample" data-sample="headings">
+              <summary>show example</summary>
+            </details>
+            <div class="flex items-center gap-4" title="Display 1">
+              <div class="w-12 shrink-0 text-primary">D1</div>
+              <d1 class="whitespace-nowrap">I used to be an adventurer like you. Then I took an arrow to the knee.</d1>
+            </div>
+            <div class="flex items-center gap-4" title="Display 2">
+              <div class="w-12 shrink-0 text-primary">D2</div>
+              <d2 class="whitespace-nowrap">I used to be an adventurer like you. Then I took an arrow to the knee.</d2>
+            </div>
+            <div class="flex items-center gap-4" title="Display 3">
+              <div class="w-12 shrink-0 text-primary">D3</div>
+              <d3 class="whitespace-nowrap">I used to be an adventurer like you. Then I took an arrow to the knee.</d3>
+            </div>
+            <div class="flex items-center gap-4" title="Display 4">
+              <div class="w-12 shrink-0 text-primary">D4</div>
+              <d4 class="whitespace-nowrap">I used to be an adventurer like you. Then I took an arrow to the knee.</d4>
+            </div>
+            <div class="flex items-center gap-4" title="Heading 1">
+              <div class="w-12 shrink-0 text-primary">H1</div>
+              <h1 class="h1 whitespace-nowrap">I used to be an adventurer like you. Then I took an arrow to the knee.</h1>
+            </div>
+            <div class="flex items-center gap-4" title="Heading 2">
+              <div class="w-12 shrink-0 text-primary">H2</div>
+              <h2 class="h2 whitespace-nowrap">I used to be an adventurer like you. Then I took an arrow to the knee.</h2>
+            </div>
+            <div class="flex items-center gap-4" title="Heading 3">
+              <div class="w-12 shrink-0 text-primary">H3</div>
+              <h3 class="h3 whitespace-nowrap">I used to be an adventurer like you. Then I took an arrow to the knee.</h3>
+            </div>
+            <div class="flex items-center gap-4" title="Heading 4">
+              <div class="w-12 shrink-0 text-primary">H4</div>
+              <h4 class="h4 whitespace-nowrap">I used to be an adventurer like you. Then I took an arrow to the knee.</h4>
+            </div>
+            <div class="flex items-center gap-4" title="Heading 5">
+              <div class="w-12 shrink-0 text-primary">H5</div>
+              <h5 class="h5 whitespace-nowrap">I used to be an adventurer like you. Then I took an arrow to the knee.</h5>
+            </div>
+            <div class="flex items-center gap-4" title="Paragraph Large">
+              <div class="w-12 shrink-0 text-primary">PL</div>
+              <pl class="whitespace-nowrap" title="Paragraph Large">I used to be an adventurer like you. Then I took an arrow to the knee.</pl>
+            </div>
+            <div class="flex items-center gap-4" title="Heading 6">
+              <div class="w-12 shrink-0 text-primary">H6</div>
+              <h6 class="h6 whitespace-nowrap">I used to be an adventurer like you. Then I took an arrow to the knee.</h6>
+            </div>
+            <div class="flex items-center gap-4" title="Paragraph">
+              <div class="w-12 shrink-0 text-primary">P</div>
+              <p class="whitespace-nowrap">I used to be an adventurer like you. Then I took an arrow to the knee.</p>
+            </div>
+            <div class="flex items-center gap-4" title="Heading Small (e.g. Title Small)">
+              <div class="w-12 shrink-0 text-primary">HS</div>
+              <hs class="whitespace-nowrap">I used to be an adventurer like you. Then I took an arrow to the knee.</hs>
+            </div>
+            <div class="flex items-center gap-4" title="Paragraph Small">
+              <div class="w-12 shrink-0 text-primary">PS</div>
+              <ps class="whitespace-nowrap">I used to be an adventurer like you. Then I took an arrow to the knee.</ps>
+            </div>
+            <div class="flex items-center gap-4" title="Heading Tiny (e.g. Title Tiny)">
+              <div class="w-12 shrink-0 text-primary">HT</div>
+              <ht class="whitespace-nowrap">I used to be an adventurer like you. Then I took an arrow to the knee.</ht>
+            </div>
+            <div class="flex items-center gap-4" title="Paragraph Tiny">
+              <div class="w-12 shrink-0 text-primary">PT</div>
+              <pt class="whitespace-nowrap">I used to be an adventurer like you. Then I took an arrow to the knee.</pt>
+            </div>
+          </card-body>
+        </card>
+
+        <!--
+          SPACING
+        -->
+
+        <card>
+          <card-header>
+            <card-title><a name="spacing-card">Spacing</a></card-title>
+          </card-header>
+          <card-body class="space-y-4">
+            <p class="p-4">
+              Our spacing units are defined as multiples of 4px.
+            </p>
+            <details class="code-sample" data-sample="spacing">
+              <summary>show example</summary>
+            </details>
+            <div class="flex flex-col text-tiny font-normal">
+              <div class="flex items-center gap-2"><div class="w-4 shrink-0 text-right">0.5</div><div class="border-t border-l border-r border-dark inline-block shrink-0 h-4 w-0.5"></div> <span class="text-gray"> 2px</span></div>
+              <div class="flex items-center gap-2"><div class="w-4 shrink-0 text-right">1</div>  <div class="border-t border-l border-r border-dark inline-block shrink-0 h-4 w-1"></div>   <span class="text-gray"> 4px</span></div>
+              <div class="flex items-center gap-2"><div class="w-4 shrink-0 text-right">1.5</div><div class="border-t border-l border-r border-dark inline-block shrink-0 h-4 w-1.5"></div> <span class="text-gray"> 6px</span></div>
+              <div class="flex items-center gap-2"><div class="w-4 shrink-0 text-right">2</div>  <div class="border-t border-l border-r border-dark inline-block shrink-0 h-4 w-2"></div>   <span class="text-gray"> 8px</span></div>
+              <div class="flex items-center gap-2"><div class="w-4 shrink-0 text-right">2.5</div><div class="border-t border-l border-r border-dark inline-block shrink-0 h-4 w-2.5"></div> <span class="text-gray">10px</span></div>
+              <div class="flex items-center gap-2"><div class="w-4 shrink-0 text-right">3</div>  <div class="border-t border-l border-r border-dark inline-block shrink-0 h-4 w-3"></div>   <span class="text-gray">12px</span></div>
+              <div class="flex items-center gap-2"><div class="w-4 shrink-0 text-right">3.5</div><div class="border-t border-l border-r border-dark inline-block shrink-0 h-4 w-3.5"></div> <span class="text-gray">14px</span></div>
+              <div class="flex items-center gap-2"><div class="w-4 shrink-0 text-right">4</div>  <div class="border-t border-l border-r border-dark inline-block shrink-0 h-4 w-4"></div>   <span class="text-gray">16px</span></div>
+              <div class="flex items-center gap-2"><div class="w-4 shrink-0 text-right">5</div>  <div class="border-t border-l border-r border-dark inline-block shrink-0 h-4 w-5"></div>   <span class="text-gray">20px</span></div>
+              <div class="flex items-center gap-2"><div class="w-4 shrink-0 text-right">6</div>  <div class="border-t border-l border-r border-dark inline-block shrink-0 h-4 w-6"></div>   <span class="text-gray">24px</span></div>
+              <div class="flex items-center gap-2"><div class="w-4 shrink-0 text-right">7</div>  <div class="border-t border-l border-r border-dark inline-block shrink-0 h-4 w-7"></div>   <span class="text-gray">28px</span></div>
+              <div class="flex items-center gap-2"><div class="w-4 shrink-0 text-right">8</div>  <div class="border-t border-l border-r border-dark inline-block shrink-0 h-4 w-8"></div>   <span class="text-gray">32px</span></div>
+              <div class="flex items-center gap-2"><div class="w-4 shrink-0 text-right">9</div>  <div class="border-t border-l border-r border-dark inline-block shrink-0 h-4 w-9"></div>   <span class="text-gray">36px</span></div>
+              <div class="flex items-center gap-2"><div class="w-4 shrink-0 text-right">10</div> <div class="border-t border-l border-r border-dark inline-block shrink-0 h-4 w-10"></div>  <span class="text-gray">40px</span></div>
+              <div class="flex items-center gap-2"><div class="w-4 shrink-0 text-right">12</div> <div class="border-t border-l border-r border-dark inline-block shrink-0 h-4 w-12"></div>  <span class="text-gray">48px</span></div>
+              <div class="flex items-center gap-2"><div class="w-4 shrink-0 text-right">14</div> <div class="border-t border-l border-r border-dark inline-block shrink-0 h-4 w-14"></div>  <span class="text-gray">56px</span></div>
+              <div class="flex items-center gap-2"><div class="w-4 shrink-0 text-right">16</div> <div class="border-t border-l border-r border-dark inline-block shrink-0 h-4 w-16"></div>  <span class="text-gray">64px</span></div>
+              <div class="flex items-center gap-2"><div class="w-4 shrink-0 text-right">18</div> <div class="border-t border-l border-r border-dark inline-block shrink-0 h-4 w-18"></div>  <span class="text-gray">72px</span></div>
+              <div class="flex items-center gap-2"><div class="w-4 shrink-0 text-right">20</div> <div class="border-t border-l border-r border-dark inline-block shrink-0 h-4 w-20"></div>  <span class="text-gray">80px</span></div>
+              <div class="flex items-center gap-2"><div class="w-4 shrink-0 text-right">24</div> <div class="border-t border-l border-r border-dark inline-block shrink-0 h-4 w-24"></div>  <span class="text-gray">96px</span></div>
+              <div class="flex items-center gap-2"><div class="w-4 shrink-0 text-right">28</div> <div class="border-t border-l border-r border-dark inline-block shrink-0 h-4 w-28"></div>  <span class="text-gray">112px</span></div>
+              <div class="flex items-center gap-2"><div class="w-4 shrink-0 text-right">32</div> <div class="border-t border-l border-r border-dark inline-block shrink-0 h-4 w-32"></div>  <span class="text-gray">128px</span></div>
+              <div class="flex items-center gap-2"><div class="w-4 shrink-0 text-right">36</div> <div class="border-t border-l border-r border-dark inline-block shrink-0 h-4 w-36"></div>  <span class="text-gray">144px</span></div>
+              <div class="flex items-center gap-2"><div class="w-4 shrink-0 text-right">40</div> <div class="border-t border-l border-r border-dark inline-block shrink-0 h-4 w-40"></div>  <span class="text-gray">160px</span></div>
+              <div class="flex items-center gap-2"><div class="w-4 shrink-0 text-right">44</div> <div class="border-t border-l border-r border-dark inline-block shrink-0 h-4 w-44"></div>  <span class="text-gray">176px</span></div>
+              <div class="flex items-center gap-2"><div class="w-4 shrink-0 text-right">48</div> <div class="border-t border-l border-r border-dark inline-block shrink-0 h-4 w-48"></div>  <span class="text-gray">192px</span></div>
+              <div class="flex items-center gap-2"><div class="w-4 shrink-0 text-right">52</div> <div class="border-t border-l border-r border-dark inline-block shrink-0 h-4 w-52"></div>  <span class="text-gray">208px</span></div>
+              <div class="flex items-center gap-2"><div class="w-4 shrink-0 text-right">56</div> <div class="border-t border-l border-r border-dark inline-block shrink-0 h-4 w-56"></div>  <span class="text-gray">224px</span></div>
+              <div class="flex items-center gap-2"><div class="w-4 shrink-0 text-right">60</div> <div class="border-t border-l border-r border-dark inline-block shrink-0 h-4 w-60"></div>  <span class="text-gray">240px</span></div>
+              <div class="flex items-center gap-2"><div class="w-4 shrink-0 text-right">64</div> <div class="border-t border-l border-r border-dark inline-block shrink-0 h-4 w-64"></div>  <span class="text-gray">256px</span></div>
+              <div class="flex items-center gap-2"><div class="w-4 shrink-0 text-right">72</div> <div class="border-t border-l border-r border-dark inline-block shrink-0 h-4 w-72"></div>  <span class="text-gray">288px</span></div>
+              <div class="flex items-center gap-2"><div class="w-4 shrink-0 text-right">80</div> <div class="border-t border-l border-r border-dark inline-block shrink-0 h-4 w-80"></div>  <span class="text-gray">320px</span></div>
+              <div class="flex items-center gap-2"><div class="w-4 shrink-0 text-right">88</div> <div class="border-t border-l border-r border-dark inline-block shrink-0 h-4 w-88"></div>  <span class="text-gray">352px</span></div>
+              <div class="flex items-center gap-2"><div class="w-4 shrink-0 text-right">96</div> <div class="border-t border-l border-r border-dark inline-block shrink-0 h-4 w-96"></div>  <span class="text-gray">384px</span></div>
+              <div class="flex items-center gap-2"><div class="w-4 shrink-0 text-right">128</div><div class="border                     border-dark inline-block shrink-0 h-4 w-128"></div> <span class="text-gray">512px</span></div>
+            </div>
+          </card-body>
+        </card>
+
+        <!--
+        LOGOS
+        -->
+        <card>
+          <card-header>
+            <card-title><a name="logos-card">Logos</a></card-title>
+          </card-header>
+          <card-body class="space-y-4">
+            <details class="code-sample" data-sample="logos">
+              <summary>show example</summary>
+            </details>
+            <div class="flex gap-8">
+              <void-logo   class="text-32 text-dark"></void-logo>
+              <fiasco-logo class="text-32 text-primary"></fiasco-logo>
+            </div>
+          </card-body>
+        </card>
+
+        <card>
+          <card-header>
+            <card-title>Logo Colors</card-title>
+          </card-header>
+          <card-body class="space-y-8">
+            <details class="code-sample" data-sample="logo-colors">
+              <summary>show example</summary>
+            </details>
+            <div class="flex flex-wrap gap-4 text-32">
+              <fiasco-logo class="text-primary" title="text-primary"></fiasco-logo>
+              <fiasco-logo class="text-success" title="text-success"></fiasco-logo>
+              <fiasco-logo class="text-warn"    title="text-warn"></fiasco-logo>
+              <fiasco-logo class="text-danger"  title="text-danger"></fiasco-logo>
+              <fiasco-logo class="text-jiggly"  title="text-jiggly"></fiasco-logo>
+              <fiasco-logo class="text-ice"     title="text-ice"></fiasco-logo>
+              <fiasco-logo class="text-kiwi"    title="text-kiwi"></fiasco-logo>
+              <fiasco-logo class="text-dark"    title="text-dark"></fiasco-logo>
+              <fiasco-logo class="text-gray"    title="text-gray"></fiasco-logo>
+            </div>
+          </card-body>
+        </card>
+
+        <card>
+          <card-header>
+            <card-title>Logo Sizes</card-title>
+          </card-header>
+          <card-body class="space-y-8">
+            <details class="code-sample" data-sample="logo-sizes">
+              <summary>show example</summary>
+            </details>
+            <div class="flex flex-wrap items-center gap-1">
+              <fiasco-logo class="text-tiny"   title="text-tiny"></fiasco-logo>
+              <fiasco-logo class="text-small"  title="text-small"></fiasco-logo>
+              <fiasco-logo class="text-base"   title="text-base"></fiasco-logo>
+              <fiasco-logo class="text-large"  title="text-large"></fiasco-logo>
+              <fiasco-logo class="text-20"     title="text-62"></fiasco-logo>
+              <fiasco-logo class="text-24"     title="text-62"></fiasco-logo>
+              <fiasco-logo class="text-32"     title="text-62"></fiasco-logo>
+              <fiasco-logo class="text-36"     title="text-62"></fiasco-logo>
+              <fiasco-logo class="text-40"     title="text-62"></fiasco-logo>
+              <fiasco-logo class="text-46"     title="text-62"></fiasco-logo>
+              <fiasco-logo class="text-54"     title="text-62"></fiasco-logo>
+              <fiasco-logo class="text-62"     title="text-62"></fiasco-logo>
+            </div>
+          </card-body>
+        </card>
+
+        <!--
+        ICONS
+        -->
+
+        <card>
+          <card-header>
+            <card-title><a name="icons-card">Icons</a></card-title>
+          </card-header>
+          <card-body class="space-y-4">
+            <p>
+              We have 1500+ icons available to us via the
+              <a href="https://iconoir.com/" target="_iconoir" class="link">iconoir library</a>.
+            </p>
+            <details class="code-sample" data-sample="icons">
+              <summary>show example</summary>
+            </details>
+            <div class="text-32">
+              <i class="iconoir-hand-brake" title="iconoir-hand-brake"></i>
+              <i class="iconoir-accessibility-sign" title="iconoir-accessibility-sign"></i>
+              <i class="iconoir-accessibility-tech" title="iconoir-accessibility-tech"></i>
+              <i class="iconoir-accessibility" title="iconoir-accessibility"></i>
+              <i class="iconoir-activity" title="iconoir-activity"></i>
+              <i class="iconoir-adobe-after-effects" title="iconoir-adobe-after-effects"></i>
+              <i class="iconoir-adobe-illustrator" title="iconoir-adobe-illustrator"></i>
+              <i class="iconoir-adobe-indesign" title="iconoir-adobe-indesign"></i>
+              <i class="iconoir-adobe-lightroom" title="iconoir-adobe-lightroom"></i>
+              <i class="iconoir-adobe-photoshop" title="iconoir-adobe-photoshop"></i>
+              <i class="iconoir-adobe-xd" title="iconoir-adobe-xd"></i>
+              <i class="iconoir-african-tree" title="iconoir-african-tree"></i>
+              <i class="iconoir-agile" title="iconoir-agile"></i>
+              <i class="iconoir-air-conditioner" title="iconoir-air-conditioner"></i>
+              <i class="iconoir-airplane-helix-45deg" title="iconoir-airplane-helix-45deg"></i>
+              <i class="iconoir-airplane-helix" title="iconoir-airplane-helix"></i>
+              <i class="iconoir-airplane-off" title="iconoir-airplane-off"></i>
+              <i class="iconoir-airplane-rotation" title="iconoir-airplane-rotation"></i>
+              <i class="iconoir-airplane" title="iconoir-airplane"></i>
+              <i class="iconoir-airplay" title="iconoir-airplay"></i>
+              <i class="iconoir-alarm" title="iconoir-alarm"></i>
+              <i class="iconoir-album-carousel" title="iconoir-album-carousel"></i>
+              <i class="iconoir-album-list" title="iconoir-album-list"></i>
+              <i class="iconoir-album-open" title="iconoir-album-open"></i>
+              <i class="iconoir-album" title="iconoir-album"></i>
+              <i class="iconoir-align-bottom-box" title="iconoir-align-bottom-box"></i>
+              <i class="iconoir-align-center" title="iconoir-align-center"></i>
+              <i class="iconoir-align-horizontal-centers" title="iconoir-align-horizontal-centers"></i>
+              <i class="iconoir-align-horizontal-spacing" title="iconoir-align-horizontal-spacing"></i>
+              <i class="iconoir-align-justify" title="iconoir-align-justify"></i>
+              <i class="iconoir-align-left-box" title="iconoir-align-left-box"></i>
+              <i class="iconoir-align-left" title="iconoir-align-left"></i>
+              <i class="iconoir-align-right-box" title="iconoir-align-right-box"></i>
+              <i class="iconoir-align-right" title="iconoir-align-right"></i>
+              <i class="iconoir-align-top-box" title="iconoir-align-top-box"></i>
+              <i class="iconoir-align-vertical-centers" title="iconoir-align-vertical-centers"></i>
+              <i class="iconoir-align-vertical-spacing" title="iconoir-align-vertical-spacing"></i>
+              <i class="iconoir-angle-tool" title="iconoir-angle-tool"></i>
+              <i class="iconoir-antenna-off" title="iconoir-antenna-off"></i>
+              <i class="iconoir-antenna-signal-tag" title="iconoir-antenna-signal-tag"></i>
+              <i class="iconoir-antenna-signal" title="iconoir-antenna-signal"></i>
+              <i class="iconoir-antenna" title="iconoir-antenna"></i>
+              <i class="iconoir-app-notification" title="iconoir-app-notification"></i>
+              <i class="iconoir-app-store" title="iconoir-app-store"></i>
+              <i class="iconoir-app-window" title="iconoir-app-window"></i>
+              <i class="iconoir-apple-half" title="iconoir-apple-half"></i>
+              <i class="iconoir-apple-imac-2021-side" title="iconoir-apple-imac-2021-side"></i>
+              <i class="iconoir-apple-imac-2021" title="iconoir-apple-imac-2021"></i>
+              <i class="iconoir-apple-mac" title="iconoir-apple-mac"></i>
+              <i class="iconoir-apple-shortcuts" title="iconoir-apple-shortcuts"></i>
+              <i class="iconoir-apple-swift" title="iconoir-apple-swift"></i>
+              <i class="iconoir-apple-wallet" title="iconoir-apple-wallet"></i>
+              <i class="iconoir-apple" title="iconoir-apple"></i>
+              <i class="iconoir-ar-tag" title="iconoir-ar-tag"></i>
+              <i class="iconoir-arc-3d-center-point" title="iconoir-arc-3d-center-point"></i>
+              <i class="iconoir-arc-3d" title="iconoir-arc-3d"></i>
+              <i class="iconoir-arcade" title="iconoir-arcade"></i>
+              <i class="iconoir-archery-match" title="iconoir-archery-match"></i>
+              <i class="iconoir-archery" title="iconoir-archery"></i>
+              <i class="iconoir-archive" title="iconoir-archive"></i>
+              <i class="iconoir-area-search" title="iconoir-area-search"></i>
+              <i class="iconoir-arrow-archery" title="iconoir-arrow-archery"></i>
+              <i class="iconoir-arrow-down-circle" title="iconoir-arrow-down-circle"></i>
+              <i class="iconoir-arrow-down-left-circle" title="iconoir-arrow-down-left-circle"></i>
+              <i class="iconoir-arrow-down-left-square" title="iconoir-arrow-down-left-square"></i>
+              <i class="iconoir-arrow-down-left" title="iconoir-arrow-down-left"></i>
+              <i class="iconoir-arrow-down-right-circle" title="iconoir-arrow-down-right-circle"></i>
+              <i class="iconoir-arrow-down-right-square" title="iconoir-arrow-down-right-square"></i>
+              <i class="iconoir-arrow-down-right" title="iconoir-arrow-down-right"></i>
+              <i class="iconoir-arrow-down-tag" title="iconoir-arrow-down-tag"></i>
+              <i class="iconoir-arrow-down" title="iconoir-arrow-down"></i>
+              <i class="iconoir-arrow-email-forward" title="iconoir-arrow-email-forward"></i>
+              <i class="iconoir-arrow-enlarge-tag" title="iconoir-arrow-enlarge-tag"></i>
+              <i class="iconoir-arrow-left-circle" title="iconoir-arrow-left-circle"></i>
+              <i class="iconoir-arrow-left-tag" title="iconoir-arrow-left-tag"></i>
+              <i class="iconoir-arrow-left" title="iconoir-arrow-left"></i>
+              <i class="iconoir-arrow-reduce-tag" title="iconoir-arrow-reduce-tag"></i>
+              <i class="iconoir-arrow-right-circle" title="iconoir-arrow-right-circle"></i>
+              <i class="iconoir-arrow-right-tag" title="iconoir-arrow-right-tag"></i>
+              <i class="iconoir-arrow-right" title="iconoir-arrow-right"></i>
+              <i class="iconoir-arrow-separate-vertical" title="iconoir-arrow-separate-vertical"></i>
+              <i class="iconoir-arrow-separate" title="iconoir-arrow-separate"></i>
+              <i class="iconoir-arrow-union-vertical" title="iconoir-arrow-union-vertical"></i>
+              <i class="iconoir-arrow-union" title="iconoir-arrow-union"></i>
+              <i class="iconoir-arrow-up-circle" title="iconoir-arrow-up-circle"></i>
+              <i class="iconoir-arrow-up-left-circle" title="iconoir-arrow-up-left-circle"></i>
+              <i class="iconoir-arrow-up-left-square" title="iconoir-arrow-up-left-square"></i>
+              <i class="iconoir-arrow-up-left" title="iconoir-arrow-up-left"></i>
+              <i class="iconoir-arrow-up-right-circle" title="iconoir-arrow-up-right-circle"></i>
+              <i class="iconoir-arrow-up-right-square" title="iconoir-arrow-up-right-square"></i>
+              <i class="iconoir-arrow-up-right" title="iconoir-arrow-up-right"></i>
+              <i class="iconoir-arrow-up-tag" title="iconoir-arrow-up-tag"></i>
+              <i class="iconoir-arrow-up" title="iconoir-arrow-up"></i>
+              <i class="iconoir-arrows-up-from-line" title="iconoir-arrows-up-from-line"></i>
+              <i class="iconoir-asana" title="iconoir-asana"></i>
+              <i class="iconoir-asterisk" title="iconoir-asterisk"></i>
+              <i class="iconoir-at-sign-circle" title="iconoir-at-sign-circle"></i>
+              <i class="iconoir-at-sign" title="iconoir-at-sign"></i>
+              <i class="iconoir-atom" title="iconoir-atom"></i>
+              <i class="iconoir-attachment" title="iconoir-attachment"></i>
+              <i class="iconoir-augmented-reality" title="iconoir-augmented-reality"></i>
+              <i class="iconoir-auto-flash" title="iconoir-auto-flash"></i>
+              <i class="iconoir-avi-format" title="iconoir-avi-format"></i>
+              <i class="iconoir-axes" title="iconoir-axes"></i>
+              <i class="iconoir-backward-15-seconds" title="iconoir-backward-15-seconds"></i>
+              <i class="iconoir-badge-check" title="iconoir-badge-check"></i>
+              <i class="iconoir-bag" title="iconoir-bag"></i>
+              <i class="iconoir-balcony" title="iconoir-balcony"></i>
+              <i class="iconoir-bank" title="iconoir-bank"></i>
+              <i class="iconoir-barcode" title="iconoir-barcode"></i>
+              <i class="iconoir-basketball-field" title="iconoir-basketball-field"></i>
+              <i class="iconoir-basketball" title="iconoir-basketball"></i>
+              <i class="iconoir-bathroom" title="iconoir-bathroom"></i>
+              <i class="iconoir-battery-25" title="iconoir-battery-25"></i>
+              <i class="iconoir-battery-50" title="iconoir-battery-50"></i>
+              <i class="iconoir-battery-75" title="iconoir-battery-75"></i>
+              <i class="iconoir-battery-charging" title="iconoir-battery-charging"></i>
+              <i class="iconoir-battery-empty" title="iconoir-battery-empty"></i>
+              <i class="iconoir-battery-full" title="iconoir-battery-full"></i>
+              <i class="iconoir-battery-indicator" title="iconoir-battery-indicator"></i>
+              <i class="iconoir-battery-slash" title="iconoir-battery-slash"></i>
+              <i class="iconoir-battery-warning" title="iconoir-battery-warning"></i>
+              <i class="iconoir-bbq" title="iconoir-bbq"></i>
+              <i class="iconoir-beach-bag" title="iconoir-beach-bag"></i>
+              <i class="iconoir-bed-ready" title="iconoir-bed-ready"></i>
+              <i class="iconoir-bed" title="iconoir-bed"></i>
+              <i class="iconoir-behance-tag" title="iconoir-behance-tag"></i>
+              <i class="iconoir-behance" title="iconoir-behance"></i>
+              <i class="iconoir-bell-notification" title="iconoir-bell-notification"></i>
+              <i class="iconoir-bell-off" title="iconoir-bell-off"></i>
+              <i class="iconoir-bell" title="iconoir-bell"></i>
+              <i class="iconoir-bicycle" title="iconoir-bicycle"></i>
+              <i class="iconoir-bin-full" title="iconoir-bin-full"></i>
+              <i class="iconoir-bin-half" title="iconoir-bin-half"></i>
+              <i class="iconoir-bin-minus-in" title="iconoir-bin-minus-in"></i>
+              <i class="iconoir-bin-plus-in" title="iconoir-bin-plus-in"></i>
+              <i class="iconoir-bin" title="iconoir-bin"></i>
+              <i class="iconoir-binocular" title="iconoir-binocular"></i>
+              <i class="iconoir-birthday-cake" title="iconoir-birthday-cake"></i>
+              <i class="iconoir-bishop" title="iconoir-bishop"></i>
+              <i class="iconoir-bitbucket" title="iconoir-bitbucket"></i>
+              <i class="iconoir-bitcoin-circle" title="iconoir-bitcoin-circle"></i>
+              <i class="iconoir-bitcoin-rotate-out" title="iconoir-bitcoin-rotate-out"></i>
+              <i class="iconoir-bluetooth-tag" title="iconoir-bluetooth-tag"></i>
+              <i class="iconoir-bluetooth" title="iconoir-bluetooth"></i>
+              <i class="iconoir-bold-square" title="iconoir-bold-square"></i>
+              <i class="iconoir-bold" title="iconoir-bold"></i>
+              <i class="iconoir-bonfire" title="iconoir-bonfire"></i>
+              <i class="iconoir-book-lock" title="iconoir-book-lock"></i>
+              <i class="iconoir-book-stack" title="iconoir-book-stack"></i>
+              <i class="iconoir-book" title="iconoir-book"></i>
+              <i class="iconoir-bookmark-book" title="iconoir-bookmark-book"></i>
+              <i class="iconoir-bookmark-circle" title="iconoir-bookmark-circle"></i>
+              <i class="iconoir-bookmark" title="iconoir-bookmark"></i>
+              <i class="iconoir-border-bl" title="iconoir-border-bl"></i>
+              <i class="iconoir-border-bottom" title="iconoir-border-bottom"></i>
+              <i class="iconoir-border-br" title="iconoir-border-br"></i>
+              <i class="iconoir-border-inner" title="iconoir-border-inner"></i>
+              <i class="iconoir-border-left" title="iconoir-border-left"></i>
+              <i class="iconoir-border-out" title="iconoir-border-out"></i>
+              <i class="iconoir-border-right" title="iconoir-border-right"></i>
+              <i class="iconoir-border-tl" title="iconoir-border-tl"></i>
+              <i class="iconoir-border-top" title="iconoir-border-top"></i>
+              <i class="iconoir-border-tr" title="iconoir-border-tr"></i>
+              <i class="iconoir-bounce-left" title="iconoir-bounce-left"></i>
+              <i class="iconoir-bounce-right" title="iconoir-bounce-right"></i>
+              <i class="iconoir-bowling-ball" title="iconoir-bowling-ball"></i>
+              <i class="iconoir-box-3d-center" title="iconoir-box-3d-center"></i>
+              <i class="iconoir-box-3d-point" title="iconoir-box-3d-point"></i>
+              <i class="iconoir-box-3d-three-points" title="iconoir-box-3d-three-points"></i>
+              <i class="iconoir-box-iso" title="iconoir-box-iso"></i>
+              <i class="iconoir-box" title="iconoir-box"></i>
+              <i class="iconoir-boxing-glove" title="iconoir-boxing-glove"></i>
+              <i class="iconoir-brain-electricity" title="iconoir-brain-electricity"></i>
+              <i class="iconoir-brain-research" title="iconoir-brain-research"></i>
+              <i class="iconoir-brain-warning" title="iconoir-brain-warning"></i>
+              <i class="iconoir-brain" title="iconoir-brain"></i>
+              <i class="iconoir-bread-slice" title="iconoir-bread-slice"></i>
+              <i class="iconoir-bridge-3d" title="iconoir-bridge-3d"></i>
+              <i class="iconoir-bridge-surface" title="iconoir-bridge-surface"></i>
+              <i class="iconoir-bright-crown" title="iconoir-bright-crown"></i>
+              <i class="iconoir-bright-star" title="iconoir-bright-star"></i>
+              <i class="iconoir-brightness-window" title="iconoir-brightness-window"></i>
+              <i class="iconoir-brightness" title="iconoir-brightness"></i>
+              <i class="iconoir-bubble-download" title="iconoir-bubble-download"></i>
+              <i class="iconoir-bubble-income" title="iconoir-bubble-income"></i>
+              <i class="iconoir-bubble-outcome" title="iconoir-bubble-outcome"></i>
+              <i class="iconoir-bubble-search" title="iconoir-bubble-search"></i>
+              <i class="iconoir-bubble-star" title="iconoir-bubble-star"></i>
+              <i class="iconoir-bubble-upload" title="iconoir-bubble-upload"></i>
+              <i class="iconoir-bubble-warning" title="iconoir-bubble-warning"></i>
+              <i class="iconoir-bubble-xmark" title="iconoir-bubble-xmark"></i>
+              <i class="iconoir-building" title="iconoir-building"></i>
+              <i class="iconoir-bus-green" title="iconoir-bus-green"></i>
+              <i class="iconoir-bus-stop" title="iconoir-bus-stop"></i>
+              <i class="iconoir-bus" title="iconoir-bus"></i>
+              <i class="iconoir-c-square" title="iconoir-c-square"></i>
+              <i class="iconoir-cable-tag" title="iconoir-cable-tag"></i>
+              <i class="iconoir-calculator" title="iconoir-calculator"></i>
+              <i class="iconoir-calendar-minus" title="iconoir-calendar-minus"></i>
+              <i class="iconoir-calendar-plus" title="iconoir-calendar-plus"></i>
+              <i class="iconoir-calendar" title="iconoir-calendar"></i>
+              <i class="iconoir-camera" title="iconoir-camera"></i>
+              <i class="iconoir-candlestick-chart" title="iconoir-candlestick-chart"></i>
+              <i class="iconoir-car" title="iconoir-car"></i>
+              <i class="iconoir-card-lock" title="iconoir-card-lock"></i>
+              <i class="iconoir-card-no-access" title="iconoir-card-no-access"></i>
+              <i class="iconoir-card-reader" title="iconoir-card-reader"></i>
+              <i class="iconoir-card-shield" title="iconoir-card-shield"></i>
+              <i class="iconoir-card-wallet" title="iconoir-card-wallet"></i>
+              <i class="iconoir-cart-alt" title="iconoir-cart-alt"></i>
+              <i class="iconoir-cart-minus" title="iconoir-cart-minus"></i>
+              <i class="iconoir-cart-plus" title="iconoir-cart-plus"></i>
+              <i class="iconoir-cart" title="iconoir-cart"></i>
+              <i class="iconoir-cash" title="iconoir-cash"></i>
+              <i class="iconoir-cell-2x2" title="iconoir-cell-2x2"></i>
+              <i class="iconoir-cellar" title="iconoir-cellar"></i>
+              <i class="iconoir-center-align" title="iconoir-center-align"></i>
+              <i class="iconoir-chat-bubble-check" title="iconoir-chat-bubble-check"></i>
+              <i class="iconoir-chat-bubble-empty" title="iconoir-chat-bubble-empty"></i>
+              <i class="iconoir-chat-bubble-question" title="iconoir-chat-bubble-question"></i>
+              <i class="iconoir-chat-bubble-translate" title="iconoir-chat-bubble-translate"></i>
+              <i class="iconoir-chat-bubble-warning" title="iconoir-chat-bubble-warning"></i>
+              <i class="iconoir-chat-bubble-xmark" title="iconoir-chat-bubble-xmark"></i>
+              <i class="iconoir-chat-bubble" title="iconoir-chat-bubble"></i>
+              <i class="iconoir-chat-lines" title="iconoir-chat-lines"></i>
+              <i class="iconoir-chat-minus-in" title="iconoir-chat-minus-in"></i>
+              <i class="iconoir-chat-plus-in" title="iconoir-chat-plus-in"></i>
+              <i class="iconoir-check-circle" title="iconoir-check-circle"></i>
+              <i class="iconoir-check-square" title="iconoir-check-square"></i>
+              <i class="iconoir-check" title="iconoir-check"></i>
+              <i class="iconoir-chocolate" title="iconoir-chocolate"></i>
+              <span class="text-24">...</span>
+            </div>
+          </card-body>
+        </card>
+
+        <card>
+          <card-header>
+            <card-title>Icon Colors</card-title>
+          </card-header>
+          <card-body class="space-y-4">
+            <details class="code-sample" data-sample="icon-colors">
+              <summary>show example</summary>
+            </details>
+            <div class="flex gap-16 flex-wrap justify-center">
+              <div>
+                <div class="flex flex-wrap items-center gap-2 text-32 mt-4">
+                  <i class="iconoir-arcade text-dark"    title="iconoir-arcade text-dark"></i>
+                  <i class="iconoir-arcade text-primary" title="iconoir-arcade text-primary"></i>
+                  <i class="iconoir-arcade text-success" title="iconoir-arcade text-success"></i>
+                  <i class="iconoir-arcade text-warn"    title="iconoir-arcade text-warn"></i>
+                  <i class="iconoir-arcade text-danger"  title="iconoir-arcade text-danger"></i>
+                </div>
+                <hr class="my-4">
+                <div class="flex flex-wrap gap-2 text-32">
+                  <div class="flex flex-col">
+                    <i class="iconoir-arcade text-gray-900" title="iconoir-arcade text-gray-900"></i>
+                    <i class="iconoir-arcade text-gray-800" title="iconoir-arcade text-gray-800"></i>
+                    <i class="iconoir-arcade text-gray-700" title="iconoir-arcade text-gray-700"></i>
+                    <i class="iconoir-arcade text-gray-600" title="iconoir-arcade text-gray-600"></i>
+                    <i class="iconoir-arcade text-gray-500" title="iconoir-arcade text-gray-500"></i>
+                    <i class="iconoir-arcade text-gray-400" title="iconoir-arcade text-gray-400"></i>
+                    <i class="iconoir-arcade text-gray-300" title="iconoir-arcade text-gray-300"></i>
+                    <i class="iconoir-arcade text-gray-200" title="iconoir-arcade text-gray-200"></i>
+                    <i class="iconoir-arcade text-gray-100" title="iconoir-arcade text-gray-100"></i>
+                    <i class="iconoir-arcade text-gray-50"  title="iconoir-arcade text-gray-50"></i>
+                  </div>
+                  <div class="flex flex-col">
+                    <i class="iconoir-arcade text-primary-900" title="iconoir-arcade text-primary-900"></i>
+                    <i class="iconoir-arcade text-primary-800" title="iconoir-arcade text-primary-800"></i>
+                    <i class="iconoir-arcade text-primary-700" title="iconoir-arcade text-primary-700"></i>
+                    <i class="iconoir-arcade text-primary-600" title="iconoir-arcade text-primary-600"></i>
+                    <i class="iconoir-arcade text-primary-500" title="iconoir-arcade text-primary-500"></i>
+                    <i class="iconoir-arcade text-primary-400" title="iconoir-arcade text-primary-400"></i>
+                    <i class="iconoir-arcade text-primary-300" title="iconoir-arcade text-primary-300"></i>
+                    <i class="iconoir-arcade text-primary-200" title="iconoir-arcade text-primary-200"></i>
+                    <i class="iconoir-arcade text-primary-100" title="iconoir-arcade text-primary-100"></i>
+                    <i class="iconoir-arcade text-primary-50"  title="iconoir-arcade text-primary-50"></i>
+                  </div>
+                  <div class="flex flex-col">
+                    <i class="iconoir-arcade text-success-900" title="iconoir-arcade text-success-900"></i>
+                    <i class="iconoir-arcade text-success-800" title="iconoir-arcade text-success-800"></i>
+                    <i class="iconoir-arcade text-success-700" title="iconoir-arcade text-success-700"></i>
+                    <i class="iconoir-arcade text-success-600" title="iconoir-arcade text-success-600"></i>
+                    <i class="iconoir-arcade text-success-500" title="iconoir-arcade text-success-500"></i>
+                    <i class="iconoir-arcade text-success-400" title="iconoir-arcade text-success-400"></i>
+                    <i class="iconoir-arcade text-success-300" title="iconoir-arcade text-success-300"></i>
+                    <i class="iconoir-arcade text-success-200" title="iconoir-arcade text-success-200"></i>
+                    <i class="iconoir-arcade text-success-100" title="iconoir-arcade text-success-100"></i>
+                    <i class="iconoir-arcade text-success-50"  title="iconoir-arcade text-success-50"></i>
+                  </div>
+                  <div class="flex flex-col">
+                    <i class="iconoir-arcade text-warn-900" title="iconoir-arcade text-warn-900"></i>
+                    <i class="iconoir-arcade text-warn-800" title="iconoir-arcade text-warn-800"></i>
+                    <i class="iconoir-arcade text-warn-700" title="iconoir-arcade text-warn-700"></i>
+                    <i class="iconoir-arcade text-warn-600" title="iconoir-arcade text-warn-600"></i>
+                    <i class="iconoir-arcade text-warn-500" title="iconoir-arcade text-warn-500"></i>
+                    <i class="iconoir-arcade text-warn-400" title="iconoir-arcade text-warn-400"></i>
+                    <i class="iconoir-arcade text-warn-300" title="iconoir-arcade text-warn-300"></i>
+                    <i class="iconoir-arcade text-warn-200" title="iconoir-arcade text-warn-200"></i>
+                    <i class="iconoir-arcade text-warn-100" title="iconoir-arcade text-warn-100"></i>
+                    <i class="iconoir-arcade text-warn-50"  title="iconoir-arcade text-warn-50"></i>
+                  </div>
+                  <div class="flex flex-col">
+                    <i class="iconoir-arcade text-danger-900" title="iconoir-arcade text-danger-900"></i>
+                    <i class="iconoir-arcade text-danger-800" title="iconoir-arcade text-danger-800"></i>
+                    <i class="iconoir-arcade text-danger-700" title="iconoir-arcade text-danger-700"></i>
+                    <i class="iconoir-arcade text-danger-600" title="iconoir-arcade text-danger-600"></i>
+                    <i class="iconoir-arcade text-danger-500" title="iconoir-arcade text-danger-500"></i>
+                    <i class="iconoir-arcade text-danger-400" title="iconoir-arcade text-danger-400"></i>
+                    <i class="iconoir-arcade text-danger-300" title="iconoir-arcade text-danger-300"></i>
+                    <i class="iconoir-arcade text-danger-200" title="iconoir-arcade text-danger-200"></i>
+                    <i class="iconoir-arcade text-danger-100" title="iconoir-arcade text-danger-100"></i>
+                    <i class="iconoir-arcade text-danger-50"  title="iconoir-arcade text-danger-50"></i>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div class="flex flex-wrap items-center gap-2 text-32 mt-4">
+                  <i class="iconoir-arcade text-ice"     title="iconoir-arcade text-ice"></i>
+                  <i class="iconoir-arcade text-kiwi"    title="iconoir-arcade text-kiwi"></i>
+                  <i class="iconoir-arcade text-jiggly"  title="iconoir-arcade text-jiggly"></i>
+                </div>
+                <hr class="my-4">
+                <div class="flex flex-wrap gap-2 text-32">
+                  <div class="flex flex-col">
+                    <i class="iconoir-arcade text-ice-900" title="iconoir-arcade text-ice-900"></i>
+                    <i class="iconoir-arcade text-ice-800" title="iconoir-arcade text-ice-800"></i>
+                    <i class="iconoir-arcade text-ice-700" title="iconoir-arcade text-ice-700"></i>
+                    <i class="iconoir-arcade text-ice-600" title="iconoir-arcade text-ice-600"></i>
+                    <i class="iconoir-arcade text-ice-500" title="iconoir-arcade text-ice-500"></i>
+                    <i class="iconoir-arcade text-ice-400" title="iconoir-arcade text-ice-400"></i>
+                    <i class="iconoir-arcade text-ice-300" title="iconoir-arcade text-ice-300"></i>
+                    <i class="iconoir-arcade text-ice-200" title="iconoir-arcade text-ice-200"></i>
+                    <i class="iconoir-arcade text-ice-100" title="iconoir-arcade text-ice-100"></i>
+                    <i class="iconoir-arcade text-ice-50"  title="iconoir-arcade text-ice-50"></i>
+                  </div>
+                  <div class="flex flex-col">
+                    <i class="iconoir-arcade text-kiwi-900" title="iconoir-arcade text-kiwi-900"></i>
+                    <i class="iconoir-arcade text-kiwi-800" title="iconoir-arcade text-kiwi-800"></i>
+                    <i class="iconoir-arcade text-kiwi-700" title="iconoir-arcade text-kiwi-700"></i>
+                    <i class="iconoir-arcade text-kiwi-600" title="iconoir-arcade text-kiwi-600"></i>
+                    <i class="iconoir-arcade text-kiwi-500" title="iconoir-arcade text-kiwi-500"></i>
+                    <i class="iconoir-arcade text-kiwi-400" title="iconoir-arcade text-kiwi-400"></i>
+                    <i class="iconoir-arcade text-kiwi-300" title="iconoir-arcade text-kiwi-300"></i>
+                    <i class="iconoir-arcade text-kiwi-200" title="iconoir-arcade text-kiwi-200"></i>
+                    <i class="iconoir-arcade text-kiwi-100" title="iconoir-arcade text-kiwi-100"></i>
+                    <i class="iconoir-arcade text-kiwi-50"  title="iconoir-arcade text-kiwi-50"></i>
+                  </div>
+                  <div class="flex flex-col">
+                    <i class="iconoir-arcade text-jiggly-900" title="iconoir-arcade text-jiggly-900"></i>
+                    <i class="iconoir-arcade text-jiggly-800" title="iconoir-arcade text-jiggly-800"></i>
+                    <i class="iconoir-arcade text-jiggly-700" title="iconoir-arcade text-jiggly-700"></i>
+                    <i class="iconoir-arcade text-jiggly-600" title="iconoir-arcade text-jiggly-600"></i>
+                    <i class="iconoir-arcade text-jiggly-500" title="iconoir-arcade text-jiggly-500"></i>
+                    <i class="iconoir-arcade text-jiggly-400" title="iconoir-arcade text-jiggly-400"></i>
+                    <i class="iconoir-arcade text-jiggly-300" title="iconoir-arcade text-jiggly-300"></i>
+                    <i class="iconoir-arcade text-jiggly-200" title="iconoir-arcade text-jiggly-200"></i>
+                    <i class="iconoir-arcade text-jiggly-100" title="iconoir-arcade text-jiggly-100"></i>
+                    <i class="iconoir-arcade text-jiggly-50"  title="iconoir-arcade text-jiggly-50"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </card-body>
+        </card>
+
+        <card>
+          <card-header>
+            <card-title>Icon Sizes</card-title>
+          </card-header>
+          <card-body class="space-y-4">
+            <details class="code-sample" data-sample="icon-sizes">
+              <summary>show example</summary>
+            </details>
+            <div class="flex flex-wrap items-center gap-1">
+              <i class="iconoir-arcade text-tiny"  title="iconoir-arcade text-tiny"></i>
+              <i class="iconoir-arcade text-small" title="iconoir-arcade text-small"></i>
+              <i class="iconoir-arcade text-base"  title="iconoir-arcade text-base"></i>
+              <i class="iconoir-arcade text-large" title="iconoir-arcade text-large"></i>
+              <i class="iconoir-arcade text-20"    title="iconoir-arcade text-20"></i>
+              <i class="iconoir-arcade text-24"    title="iconoir-arcade text-24"></i>
+              <i class="iconoir-arcade text-32"    title="iconoir-arcade text-32"></i>
+              <i class="iconoir-arcade text-36"    title="iconoir-arcade text-36"></i>
+              <i class="iconoir-arcade text-40"    title="iconoir-arcade text-40"></i>
+              <i class="iconoir-arcade text-46"    title="iconoir-arcade text-46"></i>
+              <i class="iconoir-arcade text-54"    title="iconoir-arcade text-54"></i>
+              <i class="iconoir-arcade text-62"    title="iconoir-arcade text-62"></i>
+            </div>
+          </card-body>
+        </card>
+
+        <!--
+        LINKS
+        -->
+
+        <card>
+          <card-header>
+            <card-title><a name="links-card">Links</a></card-title>
+          </card-header>
+          <card-body class="space-y-4">
+            <details class="code-sample" data-sample="links">
+              <summary>show example</summary>
+            </details>
+            <div class="p-4 flex flex-wrap">
+              <a class="link"                href="#links" noop>Primary Link</a><span class="link-separator"></span>
+              <a class="link link-secondary" href="#links" noop>Secondary Link</a><span class="link-separator"></span>
+              <a class="link link-success"   href="#links" noop>Success Link</a><span class="link-separator"></span>
+              <a class="link link-danger"    href="#links" noop>Danger Link</a><span class="link-separator"></span>
+              <a class="link link-warn"      href="#links" noop>Warning Link</a>
+            </div>
+          </card-body>
+        </card>
+
+        <!--
+          CARDS
+        -->
+        <card>
+          <card-ribbon>example</card-ribbon>
+          <card-header>
+            <card-title><a name="cards-card">Cards</a></card-title>
+            <card-header-rhs class="text-gray mr-16">this is the rhs</card-header-rhs>
+          </card-header>
+          <card-body class="space-y-4">
+            <p>
+              This page is full of cards
+            </p>
+            <details class="code-sample" data-sample="cards">
+              <summary>show example</summary>
+            </details>
+          </card-body>
+        </card>
+
+        <!--
+          TABS
+        -->
+
+        <card>
+          <card-header>
+            <card-title><a name="tabs-card">Tabs</a></card-title>
+          </card-header>
+          <card-body class="space-y-4">
+            <details class="code-sample" data-sample="tabs">
+              <summary>show example</summary>
+            </details>
+            <div class="p-4 space-y-4 pb-8">
+              <tabs>
+                <a href="#" noop class="tab selected"> <i class="iconoir-hammer"></i>        Build </a>
+                <a href="#" noop class="tab">          <i class="iconoir-arcade"></i>        Play  </a>
+                <a href="#" noop class="tab">          <i class="iconoir-share-android"></i> Share </a>
+                <a href="#" noop class="tab shrink">+</a>
+              </tabs>
+              <tabs class="tabs-secondary">
+                <a href="#" noop class="tab selected"><i class="iconoir-hammer"></i>        Build </a>
+                <a href="#" noop class="tab">         <i class="iconoir-arcade"></i>        Play  </a>
+                <a href="#" noop class="tab">         <i class="iconoir-share-android"></i> Share </a>
+                <a href="#" noop class="tab shrink">+</a>
+              </tabs>
+            </div>
+          </card-body>
+        </card>
+
+
+        <!--
+          BUTTONS
+        -->
+
+        <card>
+          <card-header>
+            <card-title><a name="buttons-card">Buttons</a></card-title>
+          </card-header>
+          <card-body class="space-y-4">
+            <details class="code-sample" data-sample="buttons">
+              <summary>show example</summary>
+            </details>
+            <div class="flex flex-wrap">
+              <div class="p-4 flex flex-wrap gap-4">
+                <div class="flex flex-col items-start space-y-2">
+                  <button class="btn-primary">   Primary   </button>
+                  <button class="btn-secondary"> Secondary </button>
+                  <button class="btn-tertiary">  Tertiary  </button>
+                  <button class="btn-danger">    Danger    </button>
+                  <button class="btn-success">   Success   </button>
+                </div>
+                <div class="flex flex-col items-start space-y-2">
+                  <button disabled class="btn-primary">   Primary   </button>
+                  <button disabled class="btn-secondary"> Secondary </button>
+                  <button disabled class="btn-tertiary">  Tertiary  </button>
+                  <button disabled class="btn-danger">    Danger    </button>
+                  <button disabled class="btn-success">   Success   </button>
+                </div>
+              </div>
+
+              <div class="p-4 flex flex-wrap gap-4">
+                <div class="flex flex-col items-start space-y-2">
+                  <button class="btn-primary">   <i class="iconoir-pokeball"></i> Primary   </button>
+                  <button class="btn-secondary"> <i class="iconoir-pokeball"></i> Secondary </button>
+                  <button class="btn-tertiary">  <i class="iconoir-pokeball"></i> Tertiary  </button>
+                  <button class="btn-danger">    <i class="iconoir-pokeball"></i> Danger    </button>
+                  <button class="btn-success">   <i class="iconoir-pokeball"></i> Success   </button>
+                </div>
+                <div class="flex flex-col items-start space-y-2">
+                  <button class="btn-round btn-primary">   <i class="iconoir-pokeball"></i> </button>
+                  <button class="btn-round btn-secondary"> <i class="iconoir-pokeball"></i> </button>
+                  <button class="btn-round btn-tertiary">  <i class="iconoir-pokeball"></i> </button>
+                  <button class="btn-round btn-danger">    <i class="iconoir-pokeball"></i> </button>
+                  <button class="btn-round btn-success">   <i class="iconoir-pokeball"></i> </button>
+                </div>
+              </div>
+
+              <div class="p-4 flex flex-wrap gap-4">
+                <div class="flex-1 space-y-2">
+                  <button class="btn-wide btn-primary">Primary</button>
+                  <button class="btn-wide btn-secondary">Secondary</button>
+                  <button class="btn-wide btn-tertiary">Tertiary</button>
+                  <button class="btn-wide btn-danger">Danger</button>
+                  <button class="btn-wide btn-success">Success</button>
+                </div>
+                <div class="flex-1 space-y-2">
+                  <button disabled class="btn-wide btn-primary">Primary</button>
+                  <button disabled class="btn-wide btn-secondary">Secondary</button>
+                  <button disabled class="btn-wide btn-tertiary">Tertiary</button>
+                  <button disabled class="btn-wide btn-danger">Danger</button>
+                  <button disabled class="btn-wide btn-success">Success</button>
+                </div>
+              </div>
+            </div>
+          </card-body>
+        </card>
+        
+        <!--
+        TOGGLE BUTTONS
+        -->
+
+        <card>
+          <card-header>
+            <card-title><a name="toggle">Toggle Buttons</a></card-title>
+          </card-header>
+          <card-body>
+            <div class="p-8 flex items-center gap-2 text-20">
+              <fx-toggle></fx-toggle>
+              <fx-toggle on></fx-toggle>
+              <fx-toggle on ice></fx-toggle>
+              <fx-toggle on kiwi></fx-toggle>
+              <fx-toggle on pkfire></fx-toggle>
+              <fx-toggle on jiggly></fx-toggle>
+            </div>
+          </card-body>
+        </card>
+
+        <!--
+        INPUTS
+        -->
+
+        <card>
+          <card-header>
+            <card-title><a name="inputs-card">Inputs</a></card-title>
+          </card-header>
+          <card-body class="space-y-4">
+            <details class="code-sample" data-sample="inputs">
+              <summary>show example</summary>
+            </details>
+
+            <fx-modal id="form-confirm">
+              <card>
+                <card-header>
+                  <card-icon class="iconoir-check-circle"></card-icon>
+                  <card-title>Form Submitted</card-title>
+                </card-header>
+                <card-body>
+                  <p>
+                  Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.
+                  </p>
+                </card-body>
+                <card-buttons>
+                  <button class="btn-primary" data-modal-close>Ok</button>
+                </card-buttons>
+              </card>
+            </fx-modal>
+
+            <form action="#" class="max-w-96 mx-auto py-4">
+
+              <field>
+                <label for="email">Email:</label>
+                <field-input>
+                  <input type="text" id="email" name="email" placeholder="name@domain.com" autocomplete="off" data-1p-ignore></input>
+                </field-input>
+                <field-help />
+              </field>
+
+              <field>
+                <label for="password">Password:</label>
+                <field-input>
+                  <input type="password" id="password" name="password" placeholder="******" autocomplete="off" data-1p-ignore></input>
+                </field-input>
+                <field-help>our eyes are closed</field-help>
+              </field>
+
+              <field>
+                <label for="icons">Icons:</label>
+                <field-input>
+                  <input type="text" id="icons" name="icons" value="mmm, pretty icons"></input>
+                  <field-icon-left class="iconoir-search"></field-icon-left>
+                  <field-icon-right class="iconoir-calendar"></field-icon-right>
+                </field-input>
+                <field-help>this field has icons</field-help>
+              </field>
+
+              <field>
+                <label for="choice">Choice:</label>
+                <field-input>
+                  <select id="choice" name="choice" autocomplete="off" data-1p-ignore>
+                    <option>First choice</option>
+                    <option>Second choice</option>
+                    <option>Third choice</option>
+                  </select>
+                </field-input>
+                <field-help>choose an option</field-help>
+              </field>
+
+              <field>
+                <label for="checkbox">Checkbox:</label>
+                <field-input class="flex-row" style="align-items:flex-start">
+                  <input id="checkbox" name="checkbox" type="checkbox"></input>
+                  <div class="flex flex-col">
+                    <label for="checkbox">Checkbox label</label>
+                    <field-help for="checkbox" >This checkbox is perfectly safe</field-help>
+                  </div>
+                </field-input>
+              </field>
+
+              <field>
+                <field-input class="flex-row" style="align-items:flex-start">
+                  <input id="checkbox" name="checkbox" type="checkbox"></input>
+                  <div class="flex flex-col">
+                    <label for="checkbox">Checkbox with error</label>
+                    <field-error for="checkbox" >This checkbox has an error!</field-error>
+                  </div>
+                </field-input>
+              </field>
+
+              <field>
+                <field-input class="flex-row" style="align-items:flex-start">
+                  <input id="check-disabled" name="check-disabled" type="checkbox" disabled></input>
+                  <div class="flex flex-col">
+                    <label for="check-disabled">Disabled</label>
+                    <field-help for="checkbox-disabled">Can't touch this</field-help>
+                  </div>
+                </field-input>
+              </field>
+
+              <field>
+                <field-input class="flex-row" style="align-items:flex-start">
+                  <input id="check-disabled-checked" name="check-disabled" type="checkbox" checked disabled></input>
+                  <div class="flex flex-col">
+                    <label for="check-disabled">Disabled checkbox label</label>
+                  </div>
+                </field-input>
+              </field>
+
+              <field>
+                <label for="description">Description:</label>
+                <field-input>
+                  <textarea id="description" name="description">Blah blah blah...</textarea>
+                </field-input>
+                <field-help>multi line textarea</field-help>
+              </field>
+
+              <field>
+                <label for="invalid">Status:</label>
+                <field-input>
+                  <input type="text" id="invalid" name="invalid" value="You have died of dysentery"></input>
+                </field-input>
+                <field-error>
+                  <icon class="iconoir-warning-circle-solid"></icon>
+                  condolences to your family.
+                </field-error>
+              </field>
+
+              <field>
+                <label for="disabled">Disabled:</label>
+                <field-input>
+                  <input type="text" disabled id="disable" name="disabled" value="can't touch this"></input>
+                </field-input>
+                <field-help>...hammer time</field-help>
+              </field>
+
+              <form-buttons>
+                <button class="btn-secondary" type="button">Cancel</button>
+                <button class="btn-primary"   type="submit" data-modal-id="form-confirm">Submit</button>
+              </form-buttons>
+
+            </form>
+
+          </card-body>
+        </card>
+
+        <!--
+          MODALS
+        -->
+
+        <card>
+          <card-header>
+            <card-title><a name="modals-card">Modals</a></card-title>
+          </card-header>
+          <card-body class="space-y-4">
+            <details class="code-sample" data-sample="modals">
+              <summary>show example</summary>
+            </details>
+
+            <fx-modal id="example-modal">
+              <card>
+                <card-header>
+                  <card-title>Hello World</card-title>
+                </card-header>
+                <card-body>
+                  Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
+                </card-body>
+                <card-buttons>
+                  <button class="btn-primary min-w-fit" data-modal-close>Done</button>
+                </card-buttons>
+              </card>
+            </fx-modal>
+
+            <fx-modal id="example-success">
+              <card>
+                <card-header>
+                  <card-title>Congratulations!</card-title>
+                  <card-icon class="iconoir-check-circle-solid text-success"></card-icon>
+                </card-header>
+                <card-body>
+                  Your thing was successfull.
+                </card-body>
+                <card-buttons>
+                  <button class="btn-success min-w-fit" data-modal-close>Ok</button>
+                </card-buttons>
+              </card>
+            </fx-modal>
+
+            <fx-modal id="example-alert">
+              <card>
+                <card-header>
+                  <card-title>Jump!</card-title>
+                  <card-icon class="iconoir-warning-triangle-solid text-danger"></card-icon>
+                </card-header>
+                <card-body>
+                  Are you sure you want to do this dangerous thing?
+                </card-body>
+                <card-buttons>
+                  <button class="btn-danger min-w-fit" data-modal-close>YOLO!</button>
+                  <button class="btn-secondary min-w-fit" data-modal-close>Cancel</button>
+                </card-buttons>
+              </card>
+            </fx-modal>
+
+            <div class="p-4  pb-8 flex flex-col gap-4 w-60">
+              <button class="btn-primary" data-modal-id="example-modal">Show MODAL</button>
+              <button class="btn-success" data-modal-id="example-success">Show SUCCESS</button>
+              <button class="btn-danger"  data-modal-id="example-alert">Show ALERT</button>
+            </div>
+          </card-body>
+        </card>
+
+
+
+        <card>
+          <card-ribbon>coming soon</card-ribbon>
+          <card-header>
+            <card-title><a name="fields">Loading Indicators</a></card-title>
+          </card-header>
+          <card-body class="min-h-40">
+          </card-body>
+        </card>
+
+        <card>
+          <card-ribbon>coming soon</card-ribbon>
+          <card-header>
+            <card-title><a name="fields">Fiasco Hand Adornments</a></card-title>
+          </card-header>
+          <card-body class="min-h-40">
+          </card-body>
+        </card>
+
+        <card>
+          <card-header>
+            <card-title><a name="misc-card">Miscellaneous</a></card-title>
+          </card-header>
+          <card-body class="min-h-40">
+            This is an <code>inline code block</code>... oooh.
+          </card-body>
+        </card>
+
+      </div>
+    </div>
+  </div>
+</body>
+</html>

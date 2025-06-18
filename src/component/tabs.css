@@ -1,0 +1,25 @@
+@layer components {
+
+  tabs, .tabs {
+    @apply border-b border-dark;
+    @apply flex;
+    @apply tabs-primary;
+  }
+
+  .tab {
+    @apply flex items-center gap-1 justify-center min-w-18;
+    @apply px-3 py-1;
+    @apply border-t border-l border-r border-dark rounded-t-lg;
+    @apply font-bold;
+    @apply cursor-pointer;
+  }
+
+  .tab.selected { @apply cursor-default; }
+  .tab.shrink   { @apply min-w-0;        }
+
+  .tabs-primary   .tab.selected { @apply bg-primary text-white; }
+  .tabs-secondary .tab.selected { @apply bg-kiwi    text-dark;  }
+
+  .tabs-primary   .tab:not(.selected) { @apply hover:bg-primary-50; }
+  .tabs-secondary .tab:not(.selected) { @apply hover:bg-kiwi-50;    }
+}

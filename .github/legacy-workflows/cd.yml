@@ -1,0 +1,25 @@
+name: CD
+
+on:
+  push:
+    branches: [production]
+
+concurrency:
+  group: deploy-design-system
+  cancel-in-progress: true
+
+jobs:
+  publish-npm:
+    uses: ./.github/workflows/publish-npm.yml
+    secrets:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  deploy-aws:
+    needs: publish-npm
+    uses: ./.github/workflows/deploy-aws.yml
+    secrets:
+      AWS_ACCOUNT_ID:     ${{ secrets.AWS_ACCOUNT_ID }}
+      AWS_ROLE_ARN:       ${{ secrets.AWS_ROLE_ARN }}
+      AWS_ECR_REPOSITORY: ${{ secrets.AWS_ECR_REPOSITORY }}
+    with:
+      version: ${{ needs.publish-npm.outputs.version }}

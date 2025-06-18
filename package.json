@@ -1,0 +1,59 @@
+{
+  "name": "@vaguevoid/design-system",
+  "version": "0.1.0",
+  "description": "Implementation of the Fiasco Design System",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/vaguevoid/design-system.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "author": "Void Team <code@void.dev>",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build --base=./",
+    "bundle": "bun run bundle:fiasco && bun run bundle:preset && bun run bundle:vite && bun run bundle:parts",
+    "bundle:fiasco": "bun run bundle:fiasco:styles && bun run bundle:fiasco:script",
+    "bundle:fiasco:styles": "tailwindcss build                    -o bundle/fiasco.css -i src/bundle/fiasco.css",
+    "bundle:fiasco:script": "esbuild --bundle --format=esm --outfile=bundle/fiasco.js     src/bundle/fiasco.ts",
+    "bundle:preset": "esbuild        --bundle --format=esm --outfile=bundle/preset.js     tailwind.config.ts",
+    "bundle:vite": "esbuild          --bundle --format=esm --outfile=bundle/vite.js       src/bundle/vite.ts",
+    "bundle:parts": "bun run bundle:parts:base && bun run bundle:parts:components && bun run bundle:parts:utilities",
+    "bundle:parts:base": "tailwindcss build -o bundle/base.css -i src/bundle/base.css",
+    "bundle:parts:components": "tailwindcss build -o bundle/components.css -i src/bundle/components.css",
+    "bundle:parts:utilities": "tailwindcss build -o bundle/utilities.css -i src/bundle/utilities.css"
+  },
+  "exports": {
+    "./preset": "./tailwind.config.ts",
+    "./components": "./src/components.ts",
+    "./base.css": "./src/base.css",
+    "./components.css": "./src/components.css",
+    "./utilities.css": "./src/utilities.css",
+    "./bundle/preset.js": "./bundle/preset.js",
+    "./bundle/fiasco.js": "./bundle/fiasco.js",
+    "./bundle/fiasco.css": "./bundle/fiasco.css",
+    "./bundle/base.css": "./bundle/base.css",
+    "./bundle/components.css": "./bundle/components.css",
+    "./bundle/utilities.css": "./bundle/utilities.css",
+    "./vite": "./bundle/vite.js"
+  },
+  "files": [
+    "bundle/**/*",
+    "public/**/*",
+    "src/**/*",
+    "tailwind.config.ts"
+  ],
+  "devDependencies": {
+    "@types/bun": "^1.2.8",
+    "dedent": "^1.5.3",
+    "esbuild": "^0.25.2",
+    "highlight.js": "^11.10.0",
+    "postcss": "^8.4.41",
+    "tailwindcss": "3.4.10",
+    "typescript": "^5.2.2",
+    "vite": "^6.2.4"
+  }
+}

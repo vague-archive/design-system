@@ -1,0 +1,23 @@
+@layer components {
+  h1, .h1 { @apply block text-36 font-semibold; }
+  h2, .h2 { @apply block text-32 font-semibold; }
+  h3, .h3 { @apply block text-24 font-semibold; }
+  h4, .h4 { @apply block text-20 font-semibold; }
+  h5, .h5 { @apply block text-16 font-semibold; }
+  h6, .h6 { @apply block text-14 font-semibold; }
+  hs, .hs { @apply block text-12 font-semibold; }
+  ht, .ht { @apply block text-10 font-semibold; }
+
+  d1, .d1 { @apply block text-62 font-semibold; }
+  d2, .d2 { @apply block text-54 font-semibold; }
+  d3, .d3 { @apply block text-46 font-semibold; }
+  d4, .d4 { @apply block text-40 font-semibold; }
+
+  pl, .pl { @apply text-large; }
+  ps, .ps { @apply text-small; }
+  pt, .pt { @apply text-tiny;  }
+
+  .text-default {
+    @apply text-base font-medium;
+  }
+}

@@ -1,0 +1,246 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+Description: >
+  Provision the design system service within the platform VPC
+
+Parameters:
+  Prefix:
+    Description: Name Prefix
+    Type: String
+    Default: design-system
+  GitHubOpenIDConnectProviderArn:
+    Description: IAM GitHub OIDC Provider
+    Type: String
+    Default: arn:aws:iam::339712894694:oidc-provider/token.actions.githubusercontent.com
+
+Resources:
+
+  GitHubActionsRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Join [ '-', [ !Ref Prefix, "github-actions-role" ] ]
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Federated: !Ref GitHubOpenIDConnectProviderArn
+            Action: "sts:AssumeRoleWithWebIdentity"
+            Condition:
+              StringEquals:
+                token.actions.githubusercontent.com:aud: sts.amazonaws.com
+              StringLike:
+                token.actions.githubusercontent.com:sub:
+                  - "repo:vaguevoid/design-system:*"
+      Policies:
+        - PolicyName: !Join [ '-', [ !Ref Prefix, "github-actions-policy" ] ]
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - "ecr:GetAuthorizationToken"
+                Resource: "*"
+              - Effect: Allow
+                Action:
+                  - "ecr:BatchCheckLayerAvailability"
+                  - "ecr:BatchGetImage"
+                  - "ecr:CompleteLayerUpload"
+                  - "ecr:InitiateLayerUpload"
+                  - "ecr:PutImage"
+                  - "ecr:UploadLayerPart"
+                Resource:
+                  - !GetAtt Repository.Arn
+              - Effect: Allow
+                Action:
+                  - "ecs:RegisterTaskDefinition"
+                  - "ecs:DescribeTaskDefinition"
+                Resource: "*"
+              - Effect: Allow
+                Action:
+                  - "ecs:DescribeServices"
+                  - "ecs:UpdateService"
+                Resource: !Ref Service
+              - Effect: Allow
+                Action:
+                  - "ecs:TagResource"
+                Resource: !Sub "arn:aws:ecs:${AWS::Region}:${AWS::AccountId}:task-definition/${Prefix}:*"
+              - Effect: Allow
+                Action:
+                  - "iam:PassRole"
+                Resource:
+                  - !GetAtt ExecutionRole.Arn
+                  - !GetAtt TaskRole.Arn
+
+  ExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Join [ '-', [ !Ref Prefix, "execution-role" ] ]
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Action: "sts:AssumeRole"
+            Principal:
+              Service: "ecs-tasks.amazonaws.com"
+      ManagedPolicyArns:
+       - "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
+
+  TaskRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Join [ '-', [ !Ref Prefix, "task-role" ] ]
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Action: "sts:AssumeRole"
+            Principal:
+              Service: "ecs-tasks.amazonaws.com"
+      Policies:
+        - PolicyName: NoPrivilegePolicy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Deny
+                Action: "*"
+                Resource: "*"
+
+  Repository:
+    Type: AWS::ECR::Repository
+    Properties:
+      RepositoryName: !Ref Prefix
+
+  LogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub "/ecs/${Prefix}"
+      RetentionInDays: 7
+
+  Task:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      Family: !Ref Prefix
+      RequiresCompatibilities:
+        - FARGATE
+      Cpu: 256
+      Memory: 512
+      NetworkMode: awsvpc
+      TaskRoleArn: !GetAtt TaskRole.Arn
+      ExecutionRoleArn: !GetAtt ExecutionRole.Arn
+      ContainerDefinitions:
+        - Name: "web"
+          Image: !Join [ ':', [ !GetAtt Repository.RepositoryUri, "latest" ] ]
+          Essential: true
+          PortMappings:
+            - ContainerPort: 80
+              Protocol: tcp
+          HealthCheck:
+            Command:
+              - "CMD-SHELL"
+              - "curl -f http://localhost/ping || exit 1"
+            Interval: 10
+            Timeout: 5
+            Retries: 3
+            StartPeriod: 5
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-group: !Ref LogGroup
+              awslogs-region: !Ref AWS::Region
+              awslogs-stream-prefix: "web"
+
+  Service:
+    Type: AWS::ECS::Service
+    Properties:
+      ServiceName: !Ref Prefix
+      Cluster: !ImportValue "platform-cluster"
+      LaunchType: "FARGATE"
+      TaskDefinition: !Ref Prefix
+      PropagateTags: TASK_DEFINITION
+      DesiredCount: 1
+      LoadBalancers:
+        - ContainerName: "web"
+          ContainerPort: 80
+          TargetGroupArn: !Ref TargetGroup
+      NetworkConfiguration:
+        AwsvpcConfiguration:
+          AssignPublicIp: "DISABLED"
+          Subnets:
+            - !ImportValue "platform-private-subnet-zone1"
+            - !ImportValue "platform-private-subnet-zone2"
+          SecurityGroups:
+            - !ImportValue "platform-web-security-group"
+      DeploymentConfiguration:
+        DeploymentCircuitBreaker:
+          Enable: true
+          Rollback: true
+
+  TargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      Name: !Ref Prefix
+      Protocol: HTTP
+      Port: 80
+      VpcId: !ImportValue "platform-vpc"
+      TargetType: ip
+      HealthCheckEnabled: true
+      HealthCheckPath: /ping?source=alb
+      HealthCheckIntervalSeconds: 30
+      HealthCheckTimeoutSeconds: 5
+      HealthyThresholdCount: 2
+      TargetGroupAttributes:
+        - Key: deregistration_delay.timeout_seconds
+          Value: 10
+
+  Listener:
+    Type: AWS::ElasticLoadBalancingV2::ListenerRule
+    Properties:
+      ListenerArn: !ImportValue "platform-alb-listener"
+      Priority: 100
+      Conditions:
+        - Field: host-header
+          HostHeaderConfig:
+            Values:
+              - "design-system.void.dev"
+      Actions:
+        - Type: forward
+          TargetGroupArn: !Ref TargetGroup
+
+#=======================
+# FINAL STACK OUTPUTS
+#=======================
+
+Outputs:
+  Repository:
+    Value: !GetAtt Repository.RepositoryUri
+    Export:
+      Name: !Join [ '-', [ !Ref Prefix, "repository" ] ]
+  LogGroup:
+    Value: !GetAtt LogGroup.Arn
+    Export:
+      Name: !Join [ '-', [ !Ref Prefix, "log-group" ] ]
+  GitHubActionsRole:
+    Value: !GetAtt GitHubActionsRole.Arn
+    Export:
+      Name: !Join [ '-', [ !Ref Prefix, "github-actions-role" ] ]
+  ExecutionRole:
+    Value: !GetAtt ExecutionRole.Arn
+    Export:
+      Name: !Join [ '-', [ !Ref Prefix, "execution-role" ] ]
+  TaskRole:
+    Value: !GetAtt TaskRole.Arn
+    Export:
+      Name: !Join [ '-', [ !Ref Prefix, "task-role" ] ]
+  TaskFamily:
+    Value: !Ref Prefix
+    Export:
+      Name: !Join [ '-', [ !Ref Prefix, "task-family" ] ]
+  TaskDefinition:
+    Value: !GetAtt Task.TaskDefinitionArn
+    Export:
+      Name: !Join [ '-', [ !Ref Prefix, "task-definition" ] ]
+  Service:
+    Value: !GetAtt Service.ServiceArn
+    Export:
+      Name: !Join [ '-', [ !Ref Prefix, "service" ] ]
